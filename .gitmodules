@@ -1,0 +1,9 @@
+[submodule "src/vendor/closure"]
+	path = src/vendor/closure
+	url = git://github.com/jarib/google-closure-library.git
+[submodule "src/vendor/requirejs"]
+	path = src/vendor/requirejs
+	url = git://github.com/jrburke/requirejs.git
+[submodule "src/vendor/javascript-stacktrace"]
+	path = src/vendor/javascript-stacktrace
+	url = git@github.com:debuggify/javascript-stacktrace.git
