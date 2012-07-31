@@ -3,8 +3,6 @@ Debuggify.js (Work In Progress)
 
 A modern multi-transport javascript debugging library for browsers focuses on enhancing development experience.
 
-## Getting Started ##
-
 ### Motivation ###
 
 In Browsers, the debugging is done using native(Chrome Development Tools) or external development tools (Firebug for firefox  etc. There are no common api's which work across every browser. Also development is extended to mobile devices on which debugging is even tougher. Along with the advancement of technology the use of remote debugging is growing. With increase in amount of javascript, rivers of logs flood the console, so its hard to find any message. The browser consoles also don't support module specific log management which are common in other development environments
@@ -20,13 +18,39 @@ Debuggify.js is designed to be a simple and universal debugging library to work 
 
 ### Features ###
 
-  - Multiple environments support ex development, production etc
-  - Multiple debugging message supported ex info, warn, error etc
+  - Multiple environments support ex. development, production etc
+  - Multiple debugging message supported ex. info, warnings, errors etc
   - Multiple project can use it on the same page
   - Multiple Modules can be managed very easily within a project
   - Manage debugging message for any module on the fly
   - Use URL parameters to manage settings
   - Optimizations for Production environment
+
+## Getting Started ##
+
+### Installation ###
+
+Run the following command to get started:
+
+    $ git clone git@github.com:debuggify/debuggify_js.git
+    $ git submodule update --init
+
+You need to have npm(node package manager), you can install npm by following:
+
+    $ curl http://npmjs.org/install.sh | sh
+
+Install requirejs to using npm
+
+    $ [sudo] npm install -g requirejs
+
+### Build ###
+
+Run the following to build the debuggify scripts.
+
+    $ r.js -o config/production.build.js
+
+After running the above successfully, check `debuggify_js/build/release/` path for the build files.
+
 
 ## Components ##
 
@@ -46,6 +70,11 @@ Include the script in the project
 Create a logger object
 
     var p1 = debuggify.Logger;
+
+You can also over
+
+    var console =  debuggify.Logger('p1',{ options })
+
 
 Set Development Environment (optional)
 
@@ -81,7 +110,7 @@ Get logger object on demand
 Modules Hierarchy
 
     var p1_m1_s1 = debuggify.Logger.get('project1').get('module1'),get('submodule1');
-    mp1_m1.log('this is a log for submodule1');
+    p1_m1_s1.log('this is a log for submodule1');
 
 Add a transport to a project
 
@@ -107,9 +136,11 @@ Make a new ticket for new bugs / suggestions at [github issue tracker]
 ### Roadmap ###
 1. Added Test Cases
 2. Cross Browser Testing
-3. Add Transports
-  a. Websockets
-  b. Http
+3. Add examples
+4. Add Transports
+  1. Websockets
+  2. Http
+
 
 **NOTE**: currently the `debuggify.js` file comes with console transport. In future we will be supporting many different transports like `websockets`, `http`
 
