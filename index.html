@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset='utf-8'>
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link href='https://fonts.googleapis.com/css?family=Architects+Daughter' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen" />
+    <link rel="stylesheet" type="text/css" href="stylesheets/pygment_trac.css" media="screen" />
+    <link rel="stylesheet" type="text/css" href="stylesheets/print.css" media="print" />
+
+    <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+
+    <title>Debuggify js by debuggify</title>
+  </head>
+
+  <body>
+    <header>
+      <div class="inner">
+        <h1>Debuggify js</h1>
+        <h2>Javascript Debugging Library</h2>
+        <a href="https://github.com/debuggify/debuggify_js" class="button"><small>View project on</small>GitHub</a>
+      </div>
+    </header>
+
+    <div id="content-wrapper">
+      <div class="inner clearfix">
+        <section id="main-content">
+          <h1>Debuggify.js</h1>
+
+<p>A modern multi-transport javascript debugging library for browsers focuses on enhancing development experience.</p>
+
+<h2>Getting Started</h2>
+
+<h3>Motivation</h3>
+
+<p>In Browsers, the debugging is done using native(Chrome Development Tools) or external development tools (Firebug for firefox  etc. There are no common api's which work across every browser. Also development is extended to mobile devices on which debugging is even tougher. Along with the advancement of technology the use of remote debugging is growing. With increase in amount of javascript, rivers of logs flood the console, so its hard to find any message. The browser consoles also don't support module specific log management which are common in other development environments</p>
+
+<p>Debuggify.js is designed to be a simple and universal debugging library to work cross browsers. Currently its focuses on Logging aspect of debugging. This library decouple logging process in to two parts (<code>logger</code> &amp; <code>collector</code>)  to make it more flexible and extensible.</p>
+
+<h3>Goals</h3>
+
+<ul>
+<li>Make debugging easy for medium to large size projects</li>
+<li>Flexible &amp; Extensible</li>
+<li>Deliver high performance</li>
+<li>Cross Browser support</li>
+</ul><h3>Features</h3>
+
+<ul>
+<li>Multiple environments support ex development, production etc</li>
+<li>Multiple debugging message supported ex info, warn, error etc</li>
+<li>Multiple project can use it on the same page</li>
+<li>Multiple Modules can be managed very easily within a project</li>
+<li>Manage debugging message for any module on the fly</li>
+<li>Use URL parameters to manage settings</li>
+<li>Optimizations for Production environment</li>
+</ul><h2>Components</h2>
+
+<ul>
+<li><a href="#logger">Logger</a></li>
+<li><a href="#collector">Collector</a></li>
+<li><a href="#transports">Transports</a></li>
+</ul><h3>Logger</h3>
+
+<p>This logger exposes simple apis to create, get logger object which can manage projects of various sizes. All the logs are collected in to a global project.</p>
+
+<p><strong>Usage</strong>
+Include the script in the project</p>
+
+<pre><code>&lt;script type="text/javascript" src="&lt;DIR PATH&gt;/deubuggify.js"&gt;&lt;/script&gt;
+</code></pre>
+
+<p>Create a logger object</p>
+
+<pre><code>var p1 = debuggify.Logger;
+</code></pre>
+
+<p>Set Development Environment (optional)</p>
+
+<pre><code>p1.setEnv('development');
+</code></pre>
+
+<p>Start using logger</p>
+
+<pre><code>p1.log('some crappy information');
+p1.error('Shit! something breaks');
+p1.warn('You better watch yourself');
+</code></pre>
+
+<p>Add module specific logger to the project</p>
+
+<pre><code>var p1_m1 = p1.module('module1');
+
+p1_m1.log('some crappy information');
+p1_m1.error('Shit! something breaks');
+p1_m1.warn('You better watch yourself');
+</code></pre>
+
+<p>Get logger object on demand</p>
+
+<pre><code>var p1 = debuggify.Logger.get('project1'); // Returns the logger object for project1
+p1.log('this is a log for project1');
+
+var p1_m1 = p1.get('module1'); // Returns the logger object for module1
+p1_m1.log('this is a log for module1');
+
+// OR
+var p1_m1 = debuggify.Logger.get('project1').get('module1'); // Directly get the module logger object
+p1_m1.log('this is a log for module1');
+</code></pre>
+
+<p>Modules Hierarchy</p>
+
+<pre><code>var p1_m1_s1 = debuggify.Logger.get('project1').get('module1'),get('submodule1');
+mp1_m1.log('this is a log for submodule1');
+</code></pre>
+
+<p>Add a transport to a project</p>
+
+<pre><code>p1.addTransport('Console', {});
+</code></pre>
+
+<h3>Collector</h3>
+
+<p>This component is responsible for collecting the logging messages from the global object and send it to various transports medium. The collector is independent of logger so it can be loaded on demand.</p>
+
+<h3>Transports</h3>
+
+<h4>Console</h4>
+
+<p>Send the logs to the browser console if it exist</p>
+
+<pre><code>p1.add('Console', options)
+</code></pre>
+
+<h2>Contributing</h2>
+
+<h3>Bugs &amp; Suggestions</h3>
+
+<p>Make a new ticket for new bugs / suggestions at <a href="https://github.com/debuggify/debuggify_js/issues">github issue tracker</a></p>
+
+<h3>Roadmap</h3>
+
+<ol>
+<li>Added Test Cases</li>
+<li>Cross Browser Testing</li>
+<li>Add Transports
+a. Websockets
+b. Http</li>
+</ol><p><strong>NOTE</strong>: currently the <code>debuggify.js</code> file comes with console transport. In future we will be supporting many different transports like <code>websockets</code>, <code>http</code></p>
+
+<h2>Inspirations</h2>
+
+<ul>
+<li><a href="https://github.com/flatiron/winston">winston</a></li>
+<li><a href="https://github.com/learnboost/socket.io">socket.io</a></li>
+</ul><h4>Author: <a href="http://twitter.com/Agarwal_Ankur">@Agarwal_Ankur</a>
+</h4>
+
+<p><em>Free Software, Fuck Yeah!</em></p>
+        </section>
+
+        <aside id="sidebar">
+          <a href="https://github.com/debuggify/debuggify_js/zipball/master" class="button">
+            <small>Download</small>
+            .zip file
+          </a>
+          <a href="https://github.com/debuggify/debuggify_js/tarball/master" class="button">
+            <small>Download</small>
+            .tar.gz file
+          </a>
+
+          <p class="repo-owner"><a href="https://github.com/debuggify/debuggify_js"></a> is maintained by <a href="https://github.com/debuggify">debuggify</a>.</p>
+
+          <p>This page was generated by <a href="pages.github.com">GitHub Pages</a> using the Architect theme by <a href="http://twitter.com/jasonlong">Jason Long</a>.</p>
+        </aside>
+      </div>
+    </div>
+
+            <script type="text/javascript">
+            var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+            document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+          </script>
+          <script type="text/javascript">
+            try {
+              var pageTracker = _gat._getTracker("UA-33559087-2");
+            pageTracker._trackPageview();
+            } catch(err) {}
+          </script>
+
+  </body>
+</html>
