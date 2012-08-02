@@ -26,6 +26,15 @@ var testing = {
   show: true
 };
 
+var urlParameters = queryString(document.location.href);
+var websocketHostname = urlParameters.websocketHostname || document.location.hostname;
+var websocketPort = urlParameters.websocketPort || 9999;
+
+websocketConfig = {
+  host: websocketHostname,
+  port: websocketPort
+};
+
 
 var config = {
 
@@ -233,4 +242,49 @@ function testProject(projectName, env) {
   testDebugging(module3logger);
   testDebugging(module31logger);
   testDebugging(module32logger);
+}
+
+/**
+ * Extract query string from input url
+ * @param  {string} url URL need to processed
+ * @return {Object}     query string as key value pair of object
+ */
+function queryString(url) {
+
+  try {
+
+    var q = url.split('?')[1];
+    var a = q.split('&');
+
+    if (a === '') {
+      return {};
+    }
+
+    var i;
+    var b = {};
+
+    for (i = 0; i < a.length; i = i + 1) {
+
+      try {
+
+        var p = a[i].split('=');
+
+        if (p.length !== 2) {
+          throw 'continue';
+        }
+
+        b[p[0]] = decodeURIComponent(p[1].replace(/\+/g, ' '));
+
+      } catch (e) {
+
+      }
+    }
+    return b;
+
+  } catch (err) {
+
+    return {};
+
+  }
+
 }

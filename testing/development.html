@@ -12,8 +12,6 @@
 
     <script type="text/javascript" src="/spec/javascripts/helpers/project.js"></script>
 
-    <script src="http://ankur.debuggify.net:9999/socket.io/socket.io.js"></script>
-
   </head>
   <body>
 
@@ -28,10 +26,10 @@
 
     <script type="text/javascript">
 
-      require(['debuggify.logger', 'transports/websockets', 'transports/console'], function(){
+      require(['debuggify.logger', 'transports/websockets', 'transports/console','http://' + websocketConfig.host + ':' + websocketConfig.port + '/socket.io/socket.io.js'], function(){
 
         config.defaults.transports = {
-          'Websockets': {},
+          'Websockets': websocketConfig,
           'Console' : {}
         };
 

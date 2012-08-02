@@ -15,7 +15,6 @@
 
     var sockets_ = {};
 
-
     // Websocket
     function Websocket (options) {
 
@@ -28,7 +27,7 @@
         silent: true,
         timestamp: true,
         host: 'ankur.debuggify.net',
-        port: '9999'
+        port: '80'
       };
 
       self.options = extend(options, self.defaults);
