@@ -73,7 +73,7 @@ Create a logger object
 
 You can also over
 
-    var console =  debuggify.Logger('p1',{ options })
+    var console =  debuggify.Logger('p1', options);
 
 
 Set Development Environment (optional)
@@ -85,6 +85,7 @@ Start using logger
     p1.log('some crappy information');
     p1.error('Shit! something breaks');
     p1.warn('You better watch yourself');
+
 
 Add module specific logger to the project
 
@@ -111,6 +112,19 @@ Modules Hierarchy
 
     var p1_m1_s1 = debuggify.Logger.get('project1').get('module1'),get('submodule1');
     p1_m1_s1.log('this is a log for submodule1');
+
+Set Logging Level (optional). Every environment has it logging level already set
+
+    p1.setLevel(2); // Set warning and errors only for project on project p1
+    p1_m1.setLevel(0); // Show all types messages for all the children on module m1
+
+**NOTE** Calling `.setLevel` on a logger will remove reinstall debugging methods for the new levels. This will also affect the behavior of all the children. For any module its nearest overridden parent level is used
+
+Set Flag for any message type (optional)
+
+    p1.setFlag('error', true); // Set the flag for
+
+**NOTE** Calling `.setFlag` on a logger will only affect the state of current object. Its children module will not be affected
 
 Add a transport to a project
 
@@ -147,6 +161,8 @@ Make a new ticket for new bugs / suggestions at [github issue tracker]
 ## Inspirations ##
   - [winston]
   - [socket.io]
+  - [stacktrace]
+  - [requirejs]
 
 #### Author: [@Agarwal_Ankur] ####
 
@@ -159,3 +175,5 @@ Make a new ticket for new bugs / suggestions at [github issue tracker]
   [Logger]: #logger
   [Collector]: #collector
   [Transports]: #transports
+  [stacktrace]: https://github.com/eriwen/javascript-stacktrace
+  [requirejs]: https://github.com/jrburke/requirejs

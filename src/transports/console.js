@@ -9,34 +9,6 @@
   var transports = debuggify.Transports;
   var console = transports.Console = transports.Console || (function (w, d, extend, globals, transports) {
 
-    // TODO: Use it to add templating support in the messages
-    // Format for the message
-    // function formatMessage(message, type, namespace, options) {
-
-    //   // For string
-    //   if(typeof message === 'string'){
-    //     try {
-    //       // compile the template if not already done
-    //       options.compiledTemplate = options.compiledTemplate || utils.processTemplate('[<%= namespace %>][<%= type %>] <%= message %>');
-
-    //       // Populate the data in to the template
-    //       return options.compiledTemplate ({
-    //         message: message,
-    //         type: type,
-    //         namespace: namespace
-    //       });
-    //     } catch (e){
-    //       return '[' + namespace + '][' + type + ']' + message;
-    //     }
-
-    //   } else {
-
-    //     return message;
-
-    //   }
-    // }
-
-
     // Console
     function Console (options) {
 
@@ -80,14 +52,9 @@
      */
     Console.prototype.send = function () {
 
-      var rawMessage = arguments[0];
+      // var rawMessage = arguments[0];
       var type = arguments[1].type;
-      // var namespace = arguments[1].namespace;
-      // var options = arguments[1];
-
       var message = this.format.apply(this, arguments);
-      // w.console.log(formatMessage(rawMessage, type, namespace, options));
-
 
       // TODO: Add checks for opera and other browsers
       // Check if console object is present
@@ -113,8 +80,6 @@
           con[type]['call']( con, Array.prototype.slice.call( message) );
 
         }
-
-
 
       } else {
 

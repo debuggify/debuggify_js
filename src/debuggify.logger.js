@@ -81,6 +81,19 @@
         timestamp: true,
 
         /**
+         * Control the message types
+         *
+         * @type {Enum}
+         *
+         * TRACE: 0,
+         * INFO: 1,
+         * WARN: 2,
+         * ERROR: 3,
+         * SILENT: 4
+         */
+        level: 0,
+
+        /**
          * Prefix for the flag variable
          *
          * @type {String}
@@ -109,14 +122,19 @@
          */
         compiledTemplate: false,
 
-        // @typeof Array
         /**
          * Different types of message types supported
          *
-         * @type {Array}
+         * @type {Object}
          * @todo Add more messagetypes
+         *
          */
-        messagesTypes: ['log', 'warn', 'error', 'info', 'assert', 'dump', 'hook'],
+        messagesTypes: {
+          'log': 0,
+          'info': 1,
+          'warn': 2,
+          'error': 3
+        },
 
         /**
          * All the transports supported
@@ -145,6 +163,7 @@
         silent: true,
         optimize: true,
         timestamp: false,
+        level: 2,
         transports: []
       },
 
@@ -154,7 +173,8 @@
        * @type {Object}
        */
       testing: {
-        silent: true
+        silent: true,
+        level: 2
       }
 
     };
@@ -212,6 +232,7 @@
 
       /**
        * Constructor for the Logger Object
+       *
        * @param {string} name    Name of logger object
        * @param {Object} environments  All different type of environments
        * @param {Object} options options that override the different configurations
@@ -245,6 +266,38 @@
 
         // Evaluate namespace on the basis on the parent
         self.setNamespace();
+      },
+
+      /**
+       * Set the level of messages that should be logged
+       * TRACE: 0,
+       * INFO: 1,
+       * WARN: 2,
+       * ERROR: 3,
+       * SILENT: 4
+       *
+       * @param {integer} level message level
+       */
+      setLevel: function (level) {
+
+        this.options.level = level;
+        installFunctions(this, this.options);
+      },
+
+      /**
+       * Set the flags
+       *
+       * @param {'string'} type  type of messageType
+       * @param {Boolean} value value of flag
+       * @return {Boolean} true if success else false
+       */
+      setFlag: function (type, value) {
+
+        if(flags_[this.namespace] && typeof flags_[this.namespace][this.options.flagPrefix + type] !== 'undefined') {
+          flags_[this.namespace][this.options.flagPrefix + type] = value;
+          return true;
+        }
+        return false;
       },
 
      /**
@@ -518,40 +571,41 @@
      */
     function installFunctions(context, options) {
 
-      var i;
-      var l = options.messagesTypes.length;
+      var type;
+      var types = options.messagesTypes;
 
       // Install all the message type in the context
-      for (i = 0; i < l; i = i + 1) {
+      for (type in types) {
 
-        var type = options.messagesTypes[i];
-
-        context[options.functionPrefix + type] = getFunc(type, options);
-
+        if(types.hasOwnProperty(type) && types[type] >= options.level) {
+          context[options.functionPrefix + type] = getFunc(type, options);
+        } else {
+          context[options.functionPrefix + type] = emptyFunction;
+        }
       }
     }
-
 
     /**
      * Install flags which keep track of different message types
      *
      * @param  {Object} context the object on which the functions are to installed
      * @param  {Object} options details need to decide which functions to install
-     * @return {undefined}           undefined
+     * @return {undefined}
      */
     function installFlags(context, namespace) {
-      var i;
+
       var options = context.options;
-      var l = options.messagesTypes.length;
+      var type;
+      var types = options.messagesTypes;
 
       flags_[namespace] = flags_[namespace] || {};
 
-      for (i = 0; i < l; i = i + 1) {
-
-        flags_[namespace][options.flagPrefix + options.messagesTypes[i]] = getFirstDefinedValue(
-          urlParameters[namespace + globals.delimiter + options.messagesTypes[i]],
+      for (type in types) {
+        flags_[namespace][options.flagPrefix + type] = getFirstDefinedValue(
+          urlParameters[namespace + globals.delimiter + type],
           urlParameters[namespace],
-          urlParameters[options.messagesTypes[i]],
+          urlParameters[type],
+          types[type] >= options.level,
           !options.silent
         );
       }
@@ -799,7 +853,8 @@
     }
 
     /**
-     * Regsiter to Listen via  window.onerror for any errors
+     * Register to Listen via  window.onerror for any errors
+     *
      * @return {undefined}
      */
     function registerForErrors(){
@@ -861,6 +916,7 @@
 
     /**
      * Get logger object by namespace
+     *
      * @param  {string} namespace the namespace for which logger object is required
      * @return {[type]}           return the object if found else return false
      */
