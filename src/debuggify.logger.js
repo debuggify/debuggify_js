@@ -548,7 +548,7 @@
       for (i = 0; i < l; i = i + 1) {
 
         flags_[namespace][options.flagPrefix + options.messagesTypes[i]] = getFirstDefinedValue(
-          urlParameters[namespace + globals.delimitser + options.messagesTypes[i]],
+          urlParameters[namespace + globals.delimiter + options.messagesTypes[i]],
           urlParameters[namespace],
           urlParameters[options.messagesTypes[i]],
           !options.silent
@@ -758,7 +758,7 @@
         var prefix = context.namespace;
 
         //check if url debugging is on or not
-        if(urlParameters && typeof urlParameters[prefix + globals.delimitser +'debug'] !== 'undefined') {
+        if(urlParameters && typeof urlParameters[prefix + globals.delimiter +'debug'] !== 'undefined') {
 
           // Url debugging is on
           // Extend the values
