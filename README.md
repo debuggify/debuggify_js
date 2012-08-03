@@ -3,6 +3,8 @@ Debuggify.js (Work In Progress)
 
 A modern multi-transport javascript debugging library for browsers focuses on enhancing development experience.
 
+![][architecture]
+
 ### Motivation ###
 
 In Browsers, the debugging is done using native(Chrome Development Tools) or external development tools (Firebug for firefox  etc. There are no common api's which work across every browser. Also development is extended to mobile devices on which debugging is even tougher. Along with the advancement of technology the use of remote debugging is growing. With increase in amount of javascript, rivers of logs flood the console, so its hard to find any message. The browser consoles also don't support module specific log management which are common in other development environments
@@ -177,3 +179,4 @@ Make a new ticket for new bugs / suggestions at [github issue tracker]
   [Transports]: #transports
   [stacktrace]: https://github.com/eriwen/javascript-stacktrace
   [requirejs]: https://github.com/jrburke/requirejs
+  [architecture]: images/architecture.png "Architecture"
