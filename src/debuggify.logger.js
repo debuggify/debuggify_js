@@ -467,6 +467,7 @@
       info.name = self.name;
       info.namespace = self.namespace;
       info.stack = appStack;
+      info.timestamp = new Date();
 
       // Format [<function Name> <argument1> <argument2> ... <argumentn>]
       self.sendToCollector([type, messageArray, info]);
