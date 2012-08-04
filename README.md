@@ -132,7 +132,7 @@ Add a transport to a project
 
     p1.addTransport('Console', {});
 
-Control the parameter through URL by enabline debug mode.Just add query string `p1__debug=true`.
+*Control the parameter through URL* by enabline debug mode.Just add query string `p1__debug=true`.
 This is very powerful can be used it to change configuration for particular module.Ex.
 
 1.Change the environment.Following will change the environment to testing for p1 project.
@@ -148,6 +148,14 @@ This is very powerful can be used it to change configuration for particular modu
     urlString?p1__debug=true&p1__m1__timestamp=false
 
 
+Get the *logger object* by its name.Following will return the logger object for p1 if it is exists else it will create a new logger object with p1 name.If you do not want to create a new logger object pass the 2nd parameter as false
+
+    debuggify.Logger.get(p1,true)
+
+
+Send message for specific type(logs,error,warning).Following will change the error message for module m1 to "This is an error message".
+
+    p1.message("This is an error message", m1, error) 
 
 ### Collector ###
 
