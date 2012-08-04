@@ -73,10 +73,10 @@ Create a logger object
 
     var p1 = debuggify.Logger;
 
-You can also over
+You can also use the library with console
 
     var console =  debuggify.Logger('p1', options);
-
+**NOTE**: The above line will replace the global console(windows.console) if local console variable is not found, so be careful while using it.
 
 Set Development Environment (optional)
 
@@ -131,6 +131,23 @@ Set Flag for any message type (optional)
 Add a transport to a project
 
     p1.addTransport('Console', {});
+
+Control the parameter through URL by enabline debug mode.Just add query string `p1__debug=true`.
+This is very powerful can be used it to change configuration for particular module.Ex.
+
+1.Change the environment.Following will change the environment to testing for p1 project.
+
+    urlString?p1__debug=true&env=testing
+
+2.To disable errors/logs/warnings for a particular module.Following will not throw warnings for m1 module for p1 project.
+
+    urlString?p1__debug=true&p1__m1__warnings=false
+
+3.To show or hide properties.Following will not show timestamp property for m1 module for p1 project.
+
+    urlString?p1__debug=true&p1__m1__timestamp=false
+
+
 
 ### Collector ###
 
