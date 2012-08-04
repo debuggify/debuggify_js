@@ -1,11 +1,10 @@
-describe("Debuggify Logger", ['debuggify.logger'], function() {
+describe("Debuggify Logger", ['debuggify.logger'], function(logger) {
 
-  var logger;
+  // var logger;
 
-  beforeEach(function() {
-    debugger;
-    logger = debuggify.Logger;
-  });
+  // beforeEach(function() {
+  //   logger = debuggify.Logger;
+  // });
 
   it("Debuggify logger", function() {
 
@@ -13,7 +12,7 @@ describe("Debuggify Logger", ['debuggify.logger'], function() {
     expect(logger).toBeDefined();
 
     // Environments
-    expect(logger.env).toBeDefined();
+    // expect(logger.env).toBeDefined();
     // expect(typeof logger.extend === 'function').toEqual(true);
 
 

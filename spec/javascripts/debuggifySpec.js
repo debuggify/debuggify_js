@@ -4,7 +4,7 @@
 *
 */
 
-describe("Debuggify", ['debuggify'], function() {
+describe("Debuggify", ['debuggify'], function(debuggify) {
 
   beforeEach(function() {
 
