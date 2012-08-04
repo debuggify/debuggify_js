@@ -122,7 +122,7 @@ Set Logging Level (optional). Every environment has it logging level already set
 
 **NOTE** Calling `.setLevel` on a logger will remove reinstall debugging methods for the new levels. This will also affect the behavior of all the children. For any module its nearest overridden parent level is used
 
-Set Flag for any message type (optional)
+<a name="setFlag"></a>Set Flag for any message type (optional)
 
     p1.setFlag('error', true); // Set the flag for
 
@@ -141,7 +141,9 @@ This is very powerful can be used it to change configuration for particular modu
 
 2.To disable errors/logs/warnings for a particular module.Following will not throw warnings for m1 module for p1 project.
 
-    urlString?p1__debug=true&p1__m1__warnings=false
+    urlString?p1__debug=true&p1__m1__info=false&p1__m1__error=false
+
+**NOTE** The above is same as [setFlag]
 
 3.To show or hide properties.Following will not show timestamp property for m1 module for p1 project.
 
@@ -191,6 +193,14 @@ Make a new ticket for new bugs / suggestions at [github issue tracker]
   - [stacktrace]
   - [requirejs]
 
+#### Contact us on contact@debuggify.net ####
+#### Follow us on twitter @d3buggify ####
+#### IRC server info ####
+Server: irc.freenode.net
+Port: 6667
+Rooms: #debuggify-dev, #debuggify
+
+
 #### Author: [@Agarwal_Ankur] ####
 
 *Free Software, Fuck Yeah!*
@@ -205,3 +215,4 @@ Make a new ticket for new bugs / suggestions at [github issue tracker]
   [stacktrace]: https://github.com/eriwen/javascript-stacktrace
   [requirejs]: https://github.com/jrburke/requirejs
   [architecture]: images/architecture.png "Architecture"
+  [setFlag]:#setFlag
