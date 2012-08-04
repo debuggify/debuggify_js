@@ -12,7 +12,7 @@
 #
 src_files:
 #    - public/javascripts/**/*.js
-    - vendor/closure/closure/goog/base.js
+#    - vendor/closure/closure/goog/base.js
     - vendor/requirejs/require.js
 
 # stylesheets
@@ -39,6 +39,7 @@ stylesheets:
 #   - helpers/**/*.js
 #
 helpers:
+  - bootstrap.js
   - helpers/jquery.min.js # Force jquery to load first
   - helpers/**/*.js
 
