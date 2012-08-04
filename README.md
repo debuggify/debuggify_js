@@ -198,7 +198,7 @@ Make a new ticket for new bugs / suggestions at [github issue tracker]
 #### IRC server info ####
 Server: irc.freenode.net
 Port: 6667
-Rooms: #debuggify-dev, #debuggify
+Rooms: #debuggify
 
 
 #### Author: [@Agarwal_Ankur] ####
