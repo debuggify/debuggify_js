@@ -832,7 +832,7 @@
           // extend the defaults values
           for(property in context.options) {
             temp = prefix + globals.delimiter + property;
-            if( context.options.hasOwnProperty(property) && urlParameters[temp] ) {
+            if( context.options.hasOwnProperty(property) && typeof urlParameters[temp] !== "undefined") {
               options[property] = urlParameters[temp];
               count = count + 1;
             }
