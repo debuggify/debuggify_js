@@ -23,3 +23,5 @@ nginx.conf
 /references/
 /temp/
 /node_modules/.bin/
+
+build/
