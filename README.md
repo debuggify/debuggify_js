@@ -89,7 +89,11 @@ This logger exposes simple apis to create, get logger object which can manage pr
 **Usage**
 Include the script in the project
 
-    <script type="text/javascript" src="<DIR PATH>/deubuggify.js"></script>
+    <script type="text/javascript" src="<DIR PATH>/debuggify.logger.console.js"></script>
+
+Or use the cdn hosted script
+
+    <script type="text/javascript" src="http://cdn.debuggify.net/debuggify/debuggify.logger.console.js"></script>
 
 Create a logger object
 
