@@ -10,6 +10,11 @@ require.config({
   },
   shim: {
 
+    'debuggify': {
+
+      exports: 'window.debuggify'
+    },
+
     'debuggify.logger': {
       deps: ['debuggify', 'stacktrace', 'utils'],
       exports: 'debuggify.Logger'
