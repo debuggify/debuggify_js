@@ -195,6 +195,13 @@ Send the logs to the browser console if it exist
 
 ## Contributing ##
 
+  - Fork debuggify_js
+  - Create a topic branch - git checkout -b my_branch
+  - Rebase your branch so that all your changes are reflected in one commit
+  - Push to your branch - git push origin my_branch
+  - Create a Pull Request from your branch, include as much documentation as you can in the commit message/pull request, following these guidelines on writing a good commit message
+  - That's it!
+
 ### Bugs & Suggestions ###
 Make a new ticket for new bugs / suggestions at [github issue tracker]
 
@@ -209,19 +216,26 @@ Make a new ticket for new bugs / suggestions at [github issue tracker]
 
 **NOTE**: currently the `debuggify.js` file comes with console transport. In future we will be supporting many different transports like `websockets`, `http`
 
+
+### Contacts ####
+
+**Email**: contact@debuggify.net
+
+**Twitter** [@d3buggify]
+
+**IRC**
+
+    Server: irc.freenode.net
+    Port: 6667
+    Rooms: #debuggify
+
+
+
 ## Inspirations ##
   - [winston]
   - [socket.io]
   - [stacktrace]
   - [requirejs]
-
-#### Contact us on contact@debuggify.net ####
-#### Follow us on twitter [@d3buggify] ####
-#### IRC server info ####
-Server: irc.freenode.net
-Port: 6667
-Rooms: #debuggify
-
 
 #### Author: [@Agarwal_Ankur] ####
 
