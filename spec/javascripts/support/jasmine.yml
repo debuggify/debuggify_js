@@ -40,7 +40,7 @@ stylesheets:
 #   - helpers/**/*.js
 #
 helpers:
-  - bootstrap.js
+  - bootstrap.js # wait for requirejs load dependency before running test cases Reference https://engineering.groupon.com/2012/javascript/testing-javascript-with-jasmine-and-requirejs/
   - helpers/jquery.min.js # Force jquery to load first
   - helpers/**/*.js
 
