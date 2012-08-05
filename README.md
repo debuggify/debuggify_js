@@ -45,13 +45,35 @@ Install requirejs to using npm
 
     $ [sudo] npm install -g requirejs
 
+Install Ruby Gems
+
+    $ bundle install
+
 ### Build ###
 
 Run the following to build the debuggify scripts.
 
-    $ r.js -o config/production.build.js
+    $ rake build
 
-After running the above successfully, check `debuggify_js/build/release/` path for the build files.
+After running the above successfully, check `public/debuggify` path for the build files.
+
+
+### Test ###
+
+    $ rake test
+
+
+### Deployment ###
+
+Set the Environment variable in the ~/.bashrc
+
+    export DEBUGGIFY_CDN=<AWS S3 Bucket>
+    export DEBUGGIFY_AWS_ACCESS_KEY_ID=<AWS KEY>
+    export DEBUGGIFY_AWS_SECRET_ACCESS_KEY=<AWS SECTRET>
+
+Run the deployment
+
+    $ rake deploy
 
 
 ## Components ##
@@ -157,7 +179,7 @@ Get the *logger object* by its name.Following will return the logger object for 
 
 Send message for specific type(logs,error,warning).Following will change the error message for module m1 to "This is an error message".
 
-    p1.message("This is an error message", m1, error) 
+    p1.message("This is an error message", m1, error)
 
 ### Collector ###
 
@@ -203,12 +225,15 @@ Rooms: #debuggify
 
 #### Author: [@Agarwal_Ankur] ####
 
+#### Contributors: [@geniussandy] ####
+
 *Free Software, Fuck Yeah!*
 
   [winston]: https://github.com/flatiron/winston
   [socket.io]: https://github.com/learnboost/socket.io
   [github issue tracker]: https://github.com/debuggify/debuggify_js/issues
-  [@Agarwal_Ankur]: http://twitter.com/Agarwal_Ankur
+  [@Agarwal_Ankur]: https://twitter.com/Agarwal_Ankur
+  [@geniussandy]: https://twitter.com/geniussandy
   [Logger]: #logger
   [Collector]: #collector
   [Transports]: #transports
