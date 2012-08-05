@@ -1,13 +1,18 @@
-
-// Development Configuration File for requriejs
+/**
+ * Configuration File for requriejs
+ * @author Ankur Agarwal
+ */
 
 require.config({
+
   baseUrl: '../src/',
+
   paths: {
     'stacktrace': ['vendor/javascript-stacktrace/stacktrace'],
     'jquery': ['https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min']
 
   },
+
   shim: {
 
     'debuggify': {
