@@ -73,10 +73,10 @@ Create a logger object
 
     var p1 = debuggify.Logger;
 
-You can also over
+You can also use the library with console
 
     var console =  debuggify.Logger('p1', options);
-
+**NOTE**: The above line will replace the global console(windows.console) if local console variable is not found, so be careful while using it.
 
 Set Development Environment (optional)
 
@@ -122,7 +122,7 @@ Set Logging Level (optional). Every environment has it logging level already set
 
 **NOTE** Calling `.setLevel` on a logger will remove reinstall debugging methods for the new levels. This will also affect the behavior of all the children. For any module its nearest overridden parent level is used
 
-Set Flag for any message type (optional)
+<a name="setFlag"></a>Set Flag for any message type (optional)
 
     p1.setFlag('error', true); // Set the flag for
 
@@ -131,6 +131,33 @@ Set Flag for any message type (optional)
 Add a transport to a project
 
     p1.addTransport('Console', {});
+
+*Control the parameter through URL* by enabline debug mode.Just add query string `p1__debug=true`.
+This is very powerful can be used it to change configuration for particular module.Ex.
+
+1.Change the environment.Following will change the environment to testing for p1 project.
+
+    urlString?p1__debug=true&env=testing
+
+2.To disable errors/logs/warnings for a particular module.Following will not throw warnings for m1 module for p1 project.
+
+    urlString?p1__debug=true&p1__m1__info=false&p1__m1__error=false
+
+**NOTE** The above is same as [setFlag]
+
+3.To show or hide properties.Following will not show timestamp property for m1 module for p1 project.
+
+    urlString?p1__debug=true&p1__m1__timestamp=false
+
+
+Get the *logger object* by its name.Following will return the logger object for p1 if it is exists else it will create a new logger object with p1 name.If you do not want to create a new logger object pass the 2nd parameter as false
+
+    debuggify.Logger.get(p1,true)
+
+
+Send message for specific type(logs,error,warning).Following will change the error message for module m1 to "This is an error message".
+
+    p1.message("This is an error message", m1, error) 
 
 ### Collector ###
 
@@ -166,6 +193,14 @@ Make a new ticket for new bugs / suggestions at [github issue tracker]
   - [stacktrace]
   - [requirejs]
 
+#### Contact us on contact@debuggify.net ####
+#### Follow us on twitter @d3buggify ####
+#### IRC server info ####
+Server: irc.freenode.net
+Port: 6667
+Rooms: #debuggify
+
+
 #### Author: [@Agarwal_Ankur] ####
 
 *Free Software, Fuck Yeah!*
@@ -180,3 +215,4 @@ Make a new ticket for new bugs / suggestions at [github issue tracker]
   [stacktrace]: https://github.com/eriwen/javascript-stacktrace
   [requirejs]: https://github.com/jrburke/requirejs
   [architecture]: images/architecture.png "Architecture"
+  [setFlag]:#setFlag
