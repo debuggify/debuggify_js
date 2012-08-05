@@ -216,7 +216,7 @@ Make a new ticket for new bugs / suggestions at [github issue tracker]
   - [requirejs]
 
 #### Contact us on contact@debuggify.net ####
-#### Follow us on twitter @d3buggify ####
+#### Follow us on twitter [@d3buggify] ####
 #### IRC server info ####
 Server: irc.freenode.net
 Port: 6667
@@ -234,6 +234,7 @@ Rooms: #debuggify
   [github issue tracker]: https://github.com/debuggify/debuggify_js/issues
   [@Agarwal_Ankur]: https://twitter.com/Agarwal_Ankur
   [@geniussandy]: https://twitter.com/geniussandy
+  [@d3buggify]: https://twitter.com/d3buggify
   [Logger]: #logger
   [Collector]: #collector
   [Transports]: #transports
