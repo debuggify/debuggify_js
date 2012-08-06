@@ -21,9 +21,9 @@ end
 task "build" do
 
   run_locally "r.js -o config/production.build.js", "Running requirejs optimizer"
-  run_locally "rm -Rf ./public && mkdir -p public", "Clean release directory"
-  run_locally "cp ./build/release ./public/release -Rp", "copy release files"
-  run_locally "mv ./public/release ./public/debuggify", "Renaming directory"
+  run_locally "rm -Rf ./public/debuggify", "Remove debuggify directory"
+  run_locally "cp ./build/release ./public/debuggify -Rp", "copy release files"
+
 
 end
 
