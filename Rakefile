@@ -19,12 +19,9 @@ end
 
 
 task "build" do
-
   run_locally "r.js -o config/production.build.js", "Running requirejs optimizer"
   run_locally "rm -Rf ./public/debuggify", "Remove debuggify directory"
   run_locally "cp ./build/release ./public/debuggify -Rp", "copy release files"
-
-
 end
 
 task "deploy" do

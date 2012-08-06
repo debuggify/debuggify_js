@@ -7,8 +7,7 @@
 (function (debuggify, undefined) {
 
   var transports = debuggify.Transports;
-  var console = transports.Console = transports.Console || (function (w, d, extend, globals, transports) {
-
+  var console = transports.Console = transports.Console || (function (w, d, extend, globals, transports, cs) {
     // Console
     function Console (options) {
 
@@ -61,7 +60,11 @@
       // Mostly for webkit base browsers and firebug
       if(w && w.console){
 
-        var con = w.console;
+        var con = (typeof w.console.isLogger === "undefined") ? w.console : cs;
+
+        if(!con) {
+          return;
+        }
 
         if(!con[type]){
           // Fallback to console.log
@@ -91,6 +94,6 @@
 
     return Console;
 
-  }(debuggify.win, debuggify.doc, debuggify.extend, debuggify.globals, transports));
+  }(debuggify.win, debuggify.doc, debuggify.extend, debuggify.globals, transports, debuggify.console));
 
 }(debuggify));

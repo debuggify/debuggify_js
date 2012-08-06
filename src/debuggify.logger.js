@@ -245,6 +245,8 @@
         // Name of the object
         self.name = name;
 
+        self.isLogger = true;
+
         self._childrens = {};
 
         self.history = [];
