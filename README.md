@@ -97,93 +97,93 @@ Or use the cdn hosted script
 
 Create a logger object
 
-    var p1 = debuggify.Logger;
+    var project1 = debuggify.Logger.create('project1');
 
 You can also use the library with console
 
-    var console =  debuggify.Logger('p1', options);
+    var console =  debuggify.Logger('project1', options);
 **NOTE**: The above line will replace the global console(windows.console) if local console variable is not found, so be careful while using it.
 
 Set Development Environment (optional)
 
-    p1.setEnv('development');
+    project1.setEnv('development');
 
 Start using logger
 
-    p1.log('some crappy information');
-    p1.error('Shit! something breaks');
-    p1.warn('You better watch yourself');
+    project1.log('some crappy information');
+    project1.error('Shit! something breaks');
+    project1.warn('You better watch yourself');
 
 
 Add module specific logger to the project
 
-    var p1_m1 = p1.module('module1');
+    var project1_module1 = project1.module('module1');
 
-    p1_m1.log('some crappy information');
-    p1_m1.error('Shit! something breaks');
-    p1_m1.warn('You better watch yourself');
+    project1_module1.log('some crappy information');
+    project1_module1.error('Shit! something breaks');
+    project1_module1.warn('You better watch yourself');
 
 Get logger object on demand
 
-    var p1 = debuggify.Logger.get('project1'); // Returns the logger object for project1
-    p1.log('this is a log for project1');
+    var project1 = debuggify.Logger.get('project1'); // Returns the logger object for project1
+    project1.log('this is a log for project1');
 
-    var p1_m1 = p1.get('module1'); // Returns the logger object for module1
-    p1_m1.log('this is a log for module1');
+    var project1_module1 = project1.get('module1'); // Returns the logger object for module1
+    project1_module1.log('this is a log for module1');
 
     // OR
-    var p1_m1 = debuggify.Logger.get('project1').get('module1'); // Directly get the module logger object
-    p1_m1.log('this is a log for module1');
+    var project1_module1 = debuggify.Logger.get('project1').get('module1'); // Directly get the module logger object
+    project1_module1.log('this is a log for module1');
 
 
 Modules Hierarchy
 
-    var p1_m1_s1 = debuggify.Logger.get('project1').get('module1'),get('submodule1');
-    p1_m1_s1.log('this is a log for submodule1');
+    var project1_module1_s1 = debuggify.Logger.get('project1').get('module1'),get('submodule1');
+    project1_module1_s1.log('this is a log for submodule1');
 
 Set Logging Level (optional). Every environment has it logging level already set
 
-    p1.setLevel(2); // Set warning and errors only for project on project p1
-    p1_m1.setLevel(0); // Show all types messages for all the children on module m1
+    project1.setLevel(2); // Set warning and errors only for project on project project1
+    project1_module1.setLevel(0); // Show all types messages for all the children on module module1
 
 **NOTE** Calling `.setLevel` on a logger will remove reinstall debugging methods for the new levels. This will also affect the behavior of all the children. For any module its nearest overridden parent level is used
 
 <a name="setFlag"></a>Set Flag for any message type (optional)
 
-    p1.setFlag('error', true); // Set the flag for
+    project1.setFlag('error', true); // Set the flag for
 
 **NOTE** Calling `.setFlag` on a logger will only affect the state of current object. Its children module will not be affected
 
 Add a transport to a project
 
-    p1.addTransport('Console', {});
+    project1.addTransport('Console', {});
 
-*Control the parameter through URL* by enabline debug mode.Just add query string `p1__debug=true`.
+*Control the parameter through URL* by enabline debug mode.Just add query string `project1__debug=true`.
 This is very powerful can be used it to change configuration for particular module.Ex.
 
-1.Change the environment.Following will change the environment to testing for p1 project.
+1.Change the environment.Following will change the environment to testing for project1 project.
 
-    urlString?p1__debug=true&env=testing
+    urlString?project1__debug=true&env=testing
 
-2.To disable errors/logs/warnings for a particular module.Following will not throw warnings for m1 module for p1 project.
+2.To disable errors/logs/warnings for a particular module.Following will not throw warnings for module1 module for project1 project.
 
-    urlString?p1__debug=true&p1__m1__info=false&p1__m1__error=false
+    urlString?project1__debug=true&project1__module1__info=false&project1__module1__error=false
 
 **NOTE** The above is same as [setFlag]
 
-3.To show or hide properties.Following will not show timestamp property for m1 module for p1 project.
+3.To show or hide properties.Following will not show timestamp property for module1 module for project1 project.
 
-    urlString?p1__debug=true&p1__m1__timestamp=false
-
-
-Get the *logger object* by its name.Following will return the logger object for p1 if it is exists else it will create a new logger object with p1 name.If you do not want to create a new logger object pass the 2nd parameter as false
-
-    debuggify.Logger.get(p1,true)
+    urlString?project1__debug=true&project1__module1__timestamp=false
 
 
-Send message for specific type(logs,error,warning).Following will change the error message for module m1 to "This is an error message".
+Get the *logger object* by its name.Following will return the logger object for project1 if it is exists else it will create a new logger object with project1 name.If you do not want to create a new logger object pass the 2nd parameter as false
 
-    p1.message("This is an error message", m1, error)
+    debuggify.Logger.get(project1,true)
+
+
+Send message for specific type(logs,error,warning).Following will change the error message for module module1 to "This is an error message".
+
+    project1.message("This is an error message", module1, error)
 
 ### Collector ###
 
@@ -195,7 +195,7 @@ This component is responsible for collecting the logging messages from the globa
 #### Console ####
 Send the logs to the browser console if it exist
 
-    p1.add('Console', options)
+    project1.add('Console', options)
 
 ## Contributing ##
 
