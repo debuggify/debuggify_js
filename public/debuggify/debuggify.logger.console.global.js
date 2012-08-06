@@ -540,4 +540,9 @@ function printStackTrace(options) {
             } else alert(message);
         }, Console;
     }(debuggify.win, debuggify.doc, debuggify.extend, debuggify.globals, transports, debuggify.console);
-}(debuggify);
+}(debuggify), function(w) {
+    if (typeof w.console.isLogger == "undefined") {
+        var console = debuggify.Logger.create("debuggifyConsole");
+        console.addTransport("Console", {}), w.console = console;
+    }
+}(window);

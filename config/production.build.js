@@ -72,11 +72,12 @@
     //If using UglifyJS for script optimization, these config options can be
     //used to pass configuration values to UglifyJS.
     //See https://github.com/mishoo/UglifyJS for the possible values.
-//    uglify: {
-//        toplevel: true,
-//        ascii_only: true,
-//        beautify: true
-//    },
+   uglify: {
+       toplevel: true,
+       ascii_only: true,
+       beautify: true,
+       squeeze: true
+   },
 
     //If using Closure Compiler for script optimization, these config options
     //can be used to configure Closure Compiler. See the documentation for
@@ -245,6 +246,10 @@
 
        {
            name: "release/debuggify.logger.websockets"
+       },
+
+       {
+           name: "release/debuggify.logger.console.global"
        }
 
         //This module entry combines all the dependencies of foo/bar/bop and foo/bar/bee
