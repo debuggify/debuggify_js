@@ -225,9 +225,11 @@ Make a new ticket for new bugs / suggestions at [github issue tracker]
 
 **Email**: contact@debuggify.net
 
-**Twitter** [@d3buggify]
+**Mailing List**: debuggify@googlegroups.com
 
-**IRC**
+**Twitter**: [@d3buggify]
+
+**IRC**:
 
     Server: irc.freenode.net
     Port: 6667
