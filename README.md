@@ -117,7 +117,7 @@ Start using logger
 
 Add module specific logger to the project
 
-    var project1_module1 = project1.module('module1');
+    var project1_module1 = project1.addModule('module1');
 
     project1_module1.log('some crappy information');
     project1_module1.error('Shit! something breaks');
@@ -138,8 +138,8 @@ Get logger object on demand
 
 Modules Hierarchy
 
-    var project1_module1_s1 = debuggify.Logger.get('project1').get('module1'),get('submodule1');
-    project1_module1_s1.log('this is a log for submodule1');
+    var project1_module1_submodule1 = debuggify.Logger.get('project1').get('module1'),get('submodule1');
+    project1_module1_submodule1.log('this is a log for submodule1');
 
 Set Logging Level (optional). Every environment has it logging level already set
 

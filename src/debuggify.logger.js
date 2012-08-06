@@ -308,7 +308,7 @@
       * @param {Object} parent parent for the logger object to be created
       * @return {Object}        A new generated logger object
       */
-      module: function module(name, environments, parent) {
+      addModule: function addModule(name, environments, parent) {
 
         try {
 
@@ -387,7 +387,7 @@
         }
 
         // Create a new module and return that
-        return this.module(name, {});
+        return this.addModule(name, {});
 
       },
 
