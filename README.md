@@ -197,6 +197,12 @@ Send the logs to the browser console if it exist
 
     project1.add('Console', options)
 
+## Bookmarklets ##
+
+Drag to the toolbar to start using them
+
+  - [logger.console.global] Overload window.console with debuggify Logger object and transport console
+
 ## Contributing ##
 
   - Fork debuggify_js
@@ -262,3 +268,4 @@ Make a new ticket for new bugs / suggestions at [github issue tracker]
   [requirejs]: https://github.com/jrburke/requirejs
   [architecture]: http://cdn.debuggify.net/images/architecture.png "Architecture"
   [setFlag]:#setFlag
+  [logger.console.global]: javascript:void((function(){var%20e=document.createElement('script');e.setAttribute('type','text/javascript');e.setAttribute('charset','UTF-8');e.setAttribute('src','http://cdn.debuggify.net/debuggify/debuggify.logger.console.global.js?r='+Math.random()*99999999);document.body.appendChild(e)})()) "Drag me to the toolbar"
