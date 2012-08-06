@@ -260,5 +260,5 @@ Make a new ticket for new bugs / suggestions at [github issue tracker]
   [Transports]: #transports
   [stacktrace]: https://github.com/eriwen/javascript-stacktrace
   [requirejs]: https://github.com/jrburke/requirejs
-  [architecture]: images/architecture.png "Architecture"
+  [architecture]: http://cdn.debuggify.net/images/architecture.png "Architecture"
   [setFlag]:#setFlag
