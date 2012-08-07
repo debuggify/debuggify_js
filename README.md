@@ -108,6 +108,10 @@ Set Development Environment (optional)
 
     project1.setEnv('development');
 
+  If no environment is set, then the defaults are used.
+
+**NOTE** User should make sure that `src/eviroments/<enviroment Name>.js`file has been include.
+
 Start using logger
 
     project1.log('some crappy information');

@@ -220,7 +220,7 @@ function testProject(projectName, env) {
   // $('#projects').append('')
 
   // Set the development environment
-  logger.setEnv('development');
+  // logger.setEnv('development');
 
   // Setup debugging for module1
   var module1logger = logger.addModule('module1', {});

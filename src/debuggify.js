@@ -52,6 +52,7 @@
       console: w.console || null,
       extend: extend,
       globals: globals,
+      envs: {},
       version: version
     };
 

@@ -5,7 +5,7 @@
  */
 (function( debuggify, undefined ) {
 
-  var logger = debuggify.Logger = debuggify.Logger || (function(w,d,extend, utils, globals) {
+  var logger = debuggify.Logger = debuggify.Logger || (function(w,d,extend, utils, globals, envs) {
 
     /**
      * Regex to filter unwanted elements from the stack
@@ -33,151 +33,7 @@
      *
      * @type {Object}
      */
-    var environments_ = {
-      /**
-       * Defaults values for different environment parameters
-       *
-       * @type {Object}
-       */
-      defaults: {
-
-        /**
-         * Flag to be used if value is not defined explicitly
-         *
-         * @type {Boolean}
-         */
-        silent: false,
-
-        /**
-         * Optimize for logger if enabled, normally to be enabled in production mode
-         *
-         * @type {Boolean}
-         * @todo Implement it
-         */
-        optimize: false,
-
-        /**
-         * To push the data to collector or not
-         *
-         * @type {Boolean}
-         * @todo Implement it
-         */
-        collector: true,
-
-        /**
-         * Save module history
-         *
-         * @type {Boolean}
-         * @todo Implement it
-         */
-        history: true,
-
-        /**
-         * Enable timestamp with messages or not
-         *
-         * @type {Boolean}
-         * @todo Implement it
-         */
-        timestamp: true,
-
-        /**
-         * Control the message types
-         *
-         * @type {Enum}
-         *
-         * TRACE: 0,
-         * INFO: 1,
-         * WARN: 2,
-         * ERROR: 3,
-         * SILENT: 4
-         */
-        level: 0,
-
-        /**
-         * Prefix for the flag variable
-         *
-         * @type {String}
-         */
-        flagPrefix: '__',
-
-        /**
-         * Prefix for the function name
-         *
-         * @type {String}
-         */
-        functionPrefix: '',
-
-        /**
-         * Message format
-         *
-         * @type {String}
-         * @todo Implement basic template support
-         */
-        messageFormat: '',
-
-        /**
-         * Compiled template to optimize the recompilation of template
-         *
-         * @type {String}
-         */
-        compiledTemplate: false,
-
-        /**
-         * Different types of message types supported
-         *
-         * @type {Object}
-         * @todo Add more messagetypes
-         *
-         */
-        messagesTypes: {
-          'log': 0,
-          'info': 1,
-          'warn': 2,
-          'error': 3
-        },
-
-        /**
-         * All the transports supported
-         *
-         * @type {Object}
-         * @todo Convert to array
-         */
-        transports: {}
-
-      },
-      /**
-       * Development Environment
-       *
-       * @type {Object}
-       */
-      development: {
-
-      },
-
-      /**
-       * Production Environment
-       *
-       * @type {Object}
-       */
-      production: {
-        silent: true,
-        optimize: true,
-        timestamp: false,
-        level: 2,
-        transports: []
-      },
-
-      /**
-       * Testing Environment
-       *
-       * @type {Object}
-       */
-      testing: {
-        silent: true,
-        level: 2
-      }
-
-    };
+    var environments_ = envs;
 
     /**
      * Store the status of message types
@@ -940,6 +796,6 @@
     };
 
 
-  }(debuggify.win, debuggify.doc, debuggify.extend, debuggify.Utils, debuggify.globals));
+  }(debuggify.win, debuggify.doc, debuggify.extend, debuggify.Utils, debuggify.globals, debuggify.envs));
 
 }(debuggify));
