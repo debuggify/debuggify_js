@@ -463,8 +463,7 @@
           urlParameters[namespace + globals.delimiter + type],
           urlParameters[namespace],
           urlParameters[type],
-          types[type] >= options.level,
-          !options.silent
+          types[type] >= options.level
         );
       }
     }
