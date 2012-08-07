@@ -351,7 +351,7 @@
           installFlags(module, module.namespace);
 
           // Add the modules to the list of all modules for this project
-          this.modules[module.name] = module;
+          parent.modules[module.name] = module;
 
           // Add the modules to the list of all modules for this project
           module.genericMessage([module.name, module.namespace, module.options, parent.namespace], '_addModule');
