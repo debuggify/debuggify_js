@@ -24,7 +24,6 @@
       var self = this;
       self.defaults = {
         level: 0,
-        silent: true,
         timestamp: true,
         host: 'ankur.debuggify.net',
         port: '80'
@@ -33,7 +32,7 @@
       self.options = extend(options, self.defaults);
 
       // Initialize the Transport Constructor
-      self.initialize(self.options.level, self.options.silent, self.options.timestamp);
+      self.initialize(self.options.level, self.options.timestamp);
 
       self.options.hostname = 'http://' + self.options.host + ':' + self.options.port;
 

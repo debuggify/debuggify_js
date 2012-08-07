@@ -16,14 +16,13 @@
       var self = this;
       self.defaults = {
         level: 0,
-        silent: true,
         timestamp: true
       };
 
       self.options = extend(options, self.defaults);
 
       // Initialize the Transport Constructor
-      self.initialize(self.options.level, self.options.silent, self.options.timestamp);
+      self.initialize(self.options.level, self.options.timestamp);
 
     }
 
