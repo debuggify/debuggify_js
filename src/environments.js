@@ -7,13 +7,6 @@
   envs.defaults = {
 
     /**
-     * Flag to be used if value is not defined explicitly
-     *
-     * @type {Boolean}
-     */
-    silent: false,
-
-    /**
      * Optimize for logger if enabled, normally to be enabled in production mode
      *
      * @type {Boolean}
