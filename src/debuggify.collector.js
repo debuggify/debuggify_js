@@ -7,7 +7,7 @@
 (function (debuggify, undefined) {
 
   var collector = debuggify.Collector = debuggify.Collector || (function (w, d, extend, globals, transports, envs) {
-
+    var console = globals.selfLogger;
     /**
      * Collection of commands which are available in collector
      * @type {Object}
@@ -26,9 +26,8 @@
           this.transports.push(new transports[transportName](options));
 
         } else {
-          throw 'transport ' + transportName + ' is not defined';
+          console.warn('transport ' + transportName + ' is not defined');
         }
-
       }
     };
 
@@ -41,7 +40,7 @@
      * @return {Boolean}     true if Array else false
      */
     function isArray (obj) {
-        return toString.call(obj) === "[object Array]";
+      return toString.call(obj) === "[object Array]";
     }
 
     /**

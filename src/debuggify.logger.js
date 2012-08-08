@@ -166,10 +166,10 @@
      /**
       * Create a new logger object wrt current object
       *
-      * @param {string} name    Name of logger object
+      * @param {string} name Name of logger object
       * @param {Object} environments  All different type of environments
       * @param {Object} parent parent for the logger object to be created
-      * @return {Object}        A new generated logger object
+      * @return {Object} A new generated logger object if everything goes fine, else false
       */
       addModule: function addModule(name, environments, parent) {
 
@@ -222,11 +222,9 @@
           return module;
 
         } catch (e) {
-
-          genericMessage(['Cannot add module name'  +
-            name + 'due to error:' + e], 'error');
+          selfLogger.message(['Cannot add module name'  +
+            name + 'due to error:' + e], 'logger', 'error');
           return false;
-
         }
       },
 
@@ -731,7 +729,7 @@
           file: file,
           fileName: file.substr(file.lastIndexOf("/") + 1) || '',
           charNo: null,
-          name: globals.selfLogger.name,
+          name: selfLogger.name,
           namespace: globals.selfLogger.namespace,
           stack: null
         };
@@ -740,7 +738,7 @@
           message = "No message";
         }
 
-        globals.selfLogger.sendToCollector(['error', [message], info]);
+        selfLogger.sendToCollector(['error', [message], info]);
 
 
         // If some other function is already listening to window.onerror,
@@ -787,8 +785,8 @@
     }
 
     // Initialize the logger object for self logging
-    globals.selfLogger = project('debuggify');
-    globals.selfLogger.genericMessage([], '_init');
+    var selfLogger = globals.selfLogger = project('debuggify');
+    selfLogger.genericMessage([], '_init');
 
     registerForErrors();
 
