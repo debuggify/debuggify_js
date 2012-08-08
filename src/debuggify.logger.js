@@ -134,12 +134,17 @@
        * ERROR: 3,
        * SILENT: 4
        *
-       * @param {integer} level message level
+       * @param {number} level message level
+       * @return {Boolean} true on success, false on failure
        */
       setLevel: function (level) {
-
+        level = parseInt(level, 10);
+        if(typeof level !== 'number' || isNaN(level) ) {
+          return false;
+        }
         this.options.level = level;
         installFunctions(this, this.options);
+        return true;
       },
 
       /**
@@ -171,8 +176,8 @@
         try {
 
           // Validate the input
-          if(typeof name === 'undefined') {
-            throw 'Need name of the module';
+          if(! (typeof name === 'string' && name !== "") ) {
+            throw 'Invalid name';
           }
 
           if(typeof environments === 'undefined') {
@@ -780,7 +785,6 @@
     function getByNamespace(namespace) {
       return globals.namespaces[namespace] || false;
     }
-
 
     // Initialize the logger object for self logging
     globals.selfLogger = project('debuggify');
