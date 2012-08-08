@@ -33,45 +33,12 @@ describe("Debuggify Logger", ['debuggify.logger'], function(logger) {
 
   describe("#create(project)",function(){
     var p1;
-    var environments_ = {
-      defaults: {
-        silent: false,
-        optimize: false,
-        collector: true,
-        history: true,
-        timestamp: true,
-        level: 0,
-        flagPrefix: '__',
-        functionPrefix: '',
-        messageFormat: '',
-        compiledTemplate: false,
-        messagesTypes: {
-          'log': 0,
-          'info': 1,
-          'warn': 2,
-          'error': 3
-        },
-        transports: {}
-      },
-      development: {
-      },
-      production: {
-        silent: true,
-        optimize: true,
-        timestamp: false,
-        level: 2,
-        transports: []
-      },
-      testing: {
-        silent: true,
-        level: 2
-      }
-    };
+    var environments_ = debuggify.envs;
 
     describe('call with single parameter',function(){
       beforeEach(function(){
-      spyOn(logger,'create').andCallThrough();
-      p1 = logger.create('project');
+        spyOn(logger,'create').andCallThrough();
+        p1 = logger.create('project');
       });
 
       it("have been called",function(){
@@ -194,9 +161,9 @@ describe("Debuggify Logger", ['debuggify.logger'], function(logger) {
   describe("#setLevel",function(){
     var p0,p1,p2,p3,p4,project;
     beforeEach(function() {
-    project = logger.create('project');
-    spyOn(project,'setLevel');
-    project.setLevel(2);
+      project = logger.create('project');
+      spyOn(project,'setLevel');
+      project.setLevel(2);
     });
 
     it("called",function(){
@@ -230,41 +197,41 @@ describe("Debuggify Logger", ['debuggify.logger'], function(logger) {
 
       it('called with setLevel 0',function(){
         expect(p1.options.level).toEqual(jasmine.any(Number));
-        expect(p0.log).not.toMatch(/function\s*\(.*\)\s*\{\s*\}/);
-        expect(p0.info).not.toMatch(/function\s*\(.*\)\s*\{\s*\}/);
-        expect(p0.warn).not.toMatch(/function\s*\(.*\)\s*\{\s*\}/);
-        expect(p0.error).not.toMatch(/function\s*\(.*\)\s*\{\s*\}/);
+        expect(p0.log).not.toMatch(emptyFunctionRegex);
+        expect(p0.info).not.toMatch(emptyFunctionRegex);
+        expect(p0.warn).not.toMatch(emptyFunctionRegex);
+        expect(p0.error).not.toMatch(emptyFunctionRegex);
       });
 
       it('called with setLevel 1',function(){
         expect(p1.options.level).toEqual(jasmine.any(Number));
-        expect(p1.log).toMatch(/function\s*\(.*\)\s*\{\s*\}/);
-        expect(p1.info).not.toMatch(/function\s*\(.*\)\s*\{\s*\}/);
-        expect(p1.warn).not.toMatch(/function\s*\(.*\)\s*\{\s*\}/);
-        expect(p1.error).not.toMatch(/function\s*\(.*\)\s*\{\s*\}/);
+        expect(p1.log).toMatch(emptyFunctionRegex);
+        expect(p1.info).not.toMatch(emptyFunctionRegex);
+        expect(p1.warn).not.toMatch(emptyFunctionRegex);
+        expect(p1.error).not.toMatch(emptyFunctionRegex);
       });
 
       it('called with setLevel 2',function(){
         expect(p1.options.level).toEqual(jasmine.any(Number));
-        expect(p2.log).toMatch(/function\s*\(.*\)\s*\{\s*\}/);
-        expect(p2.info).toMatch(/function\s*\(.*\)\s*\{\s*\}/);
-        expect(p2.warn).not.toMatch(/function\s*\(.*\)\s*\{\s*\}/);
-        expect(p2.error).not.toMatch(/function\s*\(.*\)\s*\{\s*\}/);
+        expect(p2.log).toMatch(emptyFunctionRegex);
+        expect(p2.info).toMatch(emptyFunctionRegex);
+        expect(p2.warn).not.toMatch(emptyFunctionRegex);
+        expect(p2.error).not.toMatch(emptyFunctionRegex);
       });
 
       it('called with setLevel 3',function(){
         expect(p1.options.level).toEqual(jasmine.any(Number));
-        expect(p3.log).toMatch(/function\s*\(.*\)\s*\{\s*\}/);
-        expect(p3.info).toMatch(/function\s*\(.*\)\s*\{\s*\}/);
-        expect(p3.warn).toMatch(/function\s*\(.*\)\s*\{\s*\}/);
-        expect(p3.error).not.toMatch(/function\s*\(.*\)\s*\{\s*\}/);
+        expect(p3.log).toMatch(emptyFunctionRegex);
+        expect(p3.info).toMatch(emptyFunctionRegex);
+        expect(p3.warn).toMatch(emptyFunctionRegex);
+        expect(p3.error).not.toMatch(emptyFunctionRegex);
       });
 
       it('called with setLevel 4',function(){
-        expect(p4.log).toMatch(/function\s*\(.*\)\s*\{\s*\}/);
-        expect(p4.info).toMatch(/function\s*\(.*\)\s*\{\s*\}/);
-        expect(p4.warn).toMatch(/function\s*\(.*\)\s*\{\s*\}/);
-        expect(p4.error).toMatch(/function\s*\(.*\)\s*\{\s*\}/);
+        expect(p4.log).toMatch(emptyFunctionRegex);
+        expect(p4.info).toMatch(emptyFunctionRegex);
+        expect(p4.warn).toMatch(emptyFunctionRegex);
+        expect(p4.error).toMatch(emptyFunctionRegex);
       });
     });
 
@@ -282,10 +249,10 @@ describe("Debuggify Logger", ['debuggify.logger'], function(logger) {
   describe("#setFlag",function(){
     var p0,p1,p2,p3,p4,project;
     beforeEach(function() {
-    project = logger.create('project');
-    spyOn(project,'setFlag').andCallThrough();
-    spyOn(project,'genericMessage').andCallThrough();
-    project.setFlag('warn',true);
+      project = logger.create('project');
+      spyOn(project,'setFlag').andCallThrough();
+      spyOn(project,'genericMessage').andCallThrough();
+      project.setFlag('warn',true);
     });
 
     describe("Validates function call",function(){

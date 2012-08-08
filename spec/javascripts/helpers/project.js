@@ -288,3 +288,5 @@ function queryString(url) {
   }
 
 }
+
+emptyFunctionRegex = /function\s*\(.*\)\s*\{\s*\}/;
