@@ -4,7 +4,7 @@ describe("Debuggify Logger", ['debuggify.logger'], function(logger) {
 
   var loggerObject;
   var api;
-  var loggerObjectApis = ['error','warn','info','log','genericMessage','transports','addTransport','message','sendToCollector','name','namespace','module','modules','enviroments','env','setEnv','setLevel','setFlag','setNamespace'];
+  var loggerObjectApis = ['error','warn','info','log','genericMessage','transports','addTransport','message','sendToCollector','name','namespace','addModule','modules','enviroments','env','setEnv','setLevel','setFlag','setNamespace'];
 
   function verifyApis(loggerObject){
     for(var api in loggerObjectApis){
@@ -385,14 +385,14 @@ describe("Debuggify Logger", ['debuggify.logger'], function(logger) {
     // });
   });
 
-  describe("#module - add module",function(){
+  describe("#addModule - add module",function(){
     var p1,p2,p3,p4,project,m1,m2;
     p1 = logger.create('p1');
-    m1 = p1.module('m1');
+    m1 = p1.addModule('m1');
     p2 = logger.create('p2');
-    m2 = p1.module('m2',{},p2);
+    m2 = p1.addModule('m2',{},p2);
     p3 = logger.create('p3');
-    m3 = p3.module('');
+    m3 = p3.addModule('');
     // p2.module('m2');
 
     it('module to be not added with empty name',function(){
@@ -423,7 +423,7 @@ describe("Debuggify Logger", ['debuggify.logger'], function(logger) {
     });
 
     it("expect to throw error when module added with already existing name",function(){
-      expect(p2.module('m2')).toBeDefined();
+      expect(p2.addModule('m2')).toBeDefined();
 
     });
   });
