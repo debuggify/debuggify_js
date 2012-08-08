@@ -29,10 +29,9 @@
      */
     Transports.prototype = {
 
-      initialize: function (level, silent, timestamp) {
+      initialize: function (level, timestamp) {
 
         this.level = level;
-        this.silent = silent;
         this.timestamp = timestamp;
       },
 

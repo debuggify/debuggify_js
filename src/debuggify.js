@@ -49,8 +49,10 @@
     return {
       win: w,
       doc: w.document,
+      console: w.console || null,
       extend: extend,
       globals: globals,
+      envs: {},
       version: version
     };
 
