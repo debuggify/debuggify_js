@@ -25,7 +25,7 @@
       self.defaults = {
         level: 0,
         timestamp: true,
-        host: 'ankur.debuggify.net',
+        host: 'server.debuggify.net',
         port: '80'
       };
 
