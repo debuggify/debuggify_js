@@ -5,7 +5,7 @@
  */
 (function( debuggify, undefined ) {
 
-  var logger = debuggify.Logger = debuggify.Logger || (function(w,d,extend, utils, globals) {
+  var logger = debuggify.Logger = debuggify.Logger || (function(w,d,extend, utils, globals, envs) {
 
     /**
      * Regex to filter unwanted elements from the stack
@@ -33,151 +33,7 @@
      *
      * @type {Object}
      */
-    var environments_ = {
-      /**
-       * Defaults values for different environment parameters
-       *
-       * @type {Object}
-       */
-      defaults: {
-
-        /**
-         * Flag to be used if value is not defined explicitly
-         *
-         * @type {Boolean}
-         */
-        silent: false,
-
-        /**
-         * Optimize for logger if enabled, normally to be enabled in production mode
-         *
-         * @type {Boolean}
-         * @todo Implement it
-         */
-        optimize: false,
-
-        /**
-         * To push the data to collector or not
-         *
-         * @type {Boolean}
-         * @todo Implement it
-         */
-        collector: true,
-
-        /**
-         * Save module history
-         *
-         * @type {Boolean}
-         * @todo Implement it
-         */
-        history: true,
-
-        /**
-         * Enable timestamp with messages or not
-         *
-         * @type {Boolean}
-         * @todo Implement it
-         */
-        timestamp: true,
-
-        /**
-         * Control the message types
-         *
-         * @type {Enum}
-         *
-         * TRACE: 0,
-         * INFO: 1,
-         * WARN: 2,
-         * ERROR: 3,
-         * SILENT: 4
-         */
-        level: 0,
-
-        /**
-         * Prefix for the flag variable
-         *
-         * @type {String}
-         */
-        flagPrefix: '__',
-
-        /**
-         * Prefix for the function name
-         *
-         * @type {String}
-         */
-        functionPrefix: '',
-
-        /**
-         * Message format
-         *
-         * @type {String}
-         * @todo Implement basic template support
-         */
-        messageFormat: '',
-
-        /**
-         * Compiled template to optimize the recompilation of template
-         *
-         * @type {String}
-         */
-        compiledTemplate: false,
-
-        /**
-         * Different types of message types supported
-         *
-         * @type {Object}
-         * @todo Add more messagetypes
-         *
-         */
-        messagesTypes: {
-          'log': 0,
-          'info': 1,
-          'warn': 2,
-          'error': 3
-        },
-
-        /**
-         * All the transports supported
-         *
-         * @type {Object}
-         * @todo Convert to array
-         */
-        transports: {}
-
-      },
-      /**
-       * Development Environment
-       *
-       * @type {Object}
-       */
-      development: {
-
-      },
-
-      /**
-       * Production Environment
-       *
-       * @type {Object}
-       */
-      production: {
-        silent: true,
-        optimize: true,
-        timestamp: false,
-        level: 2,
-        transports: []
-      },
-
-      /**
-       * Testing Environment
-       *
-       * @type {Object}
-       */
-      testing: {
-        silent: true,
-        level: 2
-      }
-
-    };
+    var environments_ = envs;
 
     /**
      * Store the status of message types
@@ -245,6 +101,8 @@
         // Name of the object
         self.name = name;
 
+        self.isLogger = true;
+
         self._childrens = {};
 
         self.history = [];
@@ -276,12 +134,17 @@
        * ERROR: 3,
        * SILENT: 4
        *
-       * @param {integer} level message level
+       * @param {number} level message level
+       * @return {Boolean} true on success, false on failure
        */
       setLevel: function (level) {
-
+        level = parseInt(level, 10);
+        if(typeof level !== 'number' || isNaN(level) ) {
+          return false;
+        }
         this.options.level = level;
         installFunctions(this, this.options);
+        return true;
       },
 
       /**
@@ -303,18 +166,18 @@
      /**
       * Create a new logger object wrt current object
       *
-      * @param {string} name    Name of logger object
+      * @param {string} name Name of logger object
       * @param {Object} environments  All different type of environments
       * @param {Object} parent parent for the logger object to be created
-      * @return {Object}        A new generated logger object
+      * @return {Object} A new generated logger object if everything goes fine, else false
       */
-      module: function module(name, environments, parent) {
+      addModule: function addModule(name, environments, parent) {
 
         try {
 
           // Validate the input
-          if(typeof name === 'undefined') {
-            throw 'Need name of the module';
+          if(! (typeof name === 'string' && name !== "") ) {
+            throw 'Invalid name';
           }
 
           if(typeof environments === 'undefined') {
@@ -359,11 +222,9 @@
           return module;
 
         } catch (e) {
-
-          genericMessage(['Cannot add module name'  +
-            name + 'due to error:' + e], 'error');
+          selfLogger.message(['Cannot add module name'  +
+            name + 'due to error:' + e], 'logger', 'error');
           return false;
-
         }
       },
 
@@ -387,7 +248,7 @@
         }
 
         // Create a new module and return that
-        return this.module(name, {});
+        return this.addModule(name, {});
 
       },
 
@@ -605,8 +466,7 @@
           urlParameters[namespace + globals.delimiter + type],
           urlParameters[namespace],
           urlParameters[type],
-          types[type] >= options.level,
-          !options.silent
+          types[type] >= options.level
         );
       }
     }
@@ -832,7 +692,7 @@
           // extend the defaults values
           for(property in context.options) {
             temp = prefix + globals.delimiter + property;
-            if( context.options.hasOwnProperty(property) && urlParameters[temp] ) {
+            if( context.options.hasOwnProperty(property) && typeof urlParameters[temp] !== "undefined") {
               options[property] = urlParameters[temp];
               count = count + 1;
             }
@@ -869,7 +729,7 @@
           file: file,
           fileName: file.substr(file.lastIndexOf("/") + 1) || '',
           charNo: null,
-          name: globals.selfLogger.name,
+          name: selfLogger.name,
           namespace: globals.selfLogger.namespace,
           stack: null
         };
@@ -878,7 +738,7 @@
           message = "No message";
         }
 
-        globals.selfLogger.sendToCollector(['error', [message], info]);
+        selfLogger.sendToCollector(['error', [message], info]);
 
 
         // If some other function is already listening to window.onerror,
@@ -924,10 +784,9 @@
       return globals.namespaces[namespace] || false;
     }
 
-
     // Initialize the logger object for self logging
-    globals.selfLogger = project('debuggify');
-    globals.selfLogger.genericMessage([], '_init');
+    var selfLogger = globals.selfLogger = project('debuggify');
+    selfLogger.genericMessage([], '_init');
 
     registerForErrors();
 
@@ -938,6 +797,6 @@
     };
 
 
-  }(debuggify.win, debuggify.doc, debuggify.extend, debuggify.Utils, debuggify.globals));
+  }(debuggify.win, debuggify.doc, debuggify.extend, debuggify.Utils, debuggify.globals, debuggify.envs));
 
 }(debuggify));

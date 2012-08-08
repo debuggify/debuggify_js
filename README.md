@@ -45,13 +45,35 @@ Install requirejs to using npm
 
     $ [sudo] npm install -g requirejs
 
+Install Ruby Gems
+
+    $ bundle install
+
 ### Build ###
 
 Run the following to build the debuggify scripts.
 
-    $ r.js -o config/production.build.js
+    $ rake build
 
-After running the above successfully, check `debuggify_js/build/release/` path for the build files.
+After running the above successfully, check `public/debuggify` path for the build files.
+
+
+### Test ###
+
+    $ rake test
+
+
+### Deployment ###
+
+Set the Environment variable in the ~/.bashrc
+
+    export DEBUGGIFY_CDN=<AWS S3 Bucket>
+    export DEBUGGIFY_AWS_ACCESS_KEY_ID=<AWS KEY>
+    export DEBUGGIFY_AWS_SECRET_ACCESS_KEY=<AWS SECTRET>
+
+Run the deployment
+
+    $ rake deploy
 
 
 ## Components ##
@@ -67,70 +89,105 @@ This logger exposes simple apis to create, get logger object which can manage pr
 **Usage**
 Include the script in the project
 
-    <script type="text/javascript" src="<DIR PATH>/deubuggify.js"></script>
+    <script type="text/javascript" src="<DIR PATH>/debuggify.logger.console.js"></script>
+
+Or use the cdn hosted script
+
+    <script type="text/javascript" src="http://cdn.debuggify.net/debuggify/debuggify.logger.console.js"></script>
 
 Create a logger object
 
-    var p1 = debuggify.Logger;
+    var project1 = debuggify.Logger.create('project1');
 
-You can also over
+You can also use the library with console
 
-    var console =  debuggify.Logger('p1', options);
-
+    var console =  debuggify.Logger('project1', options);
+**NOTE**: The above line will replace the global console(windows.console) if local console variable is not found, so be careful while using it.
 
 Set Development Environment (optional)
 
-    p1.setEnv('development');
+    project1.setEnv('development');
+
+  If no environment is set, then the defaults are used.
+
+**NOTE** User should make sure that `src/eviroments/<enviroment Name>.js`file has been include.
 
 Start using logger
 
-    p1.log('some crappy information');
-    p1.error('Shit! something breaks');
-    p1.warn('You better watch yourself');
+    project1.log('some crappy information');
+    project1.error('Shit! something breaks');
+    project1.warn('You better watch yourself');
 
 
 Add module specific logger to the project
 
-    var p1_m1 = p1.module('module1');
+    var project1_module1 = project1.addModule('module1');
 
-    p1_m1.log('some crappy information');
-    p1_m1.error('Shit! something breaks');
-    p1_m1.warn('You better watch yourself');
+    project1_module1.log('some crappy information');
+    project1_module1.error('Shit! something breaks');
+    project1_module1.warn('You better watch yourself');
 
 Get logger object on demand
 
-    var p1 = debuggify.Logger.get('project1'); // Returns the logger object for project1
-    p1.log('this is a log for project1');
+    var project1 = debuggify.Logger.get('project1'); // Returns the logger object for project1
+    project1.log('this is a log for project1');
 
-    var p1_m1 = p1.get('module1'); // Returns the logger object for module1
-    p1_m1.log('this is a log for module1');
+    var project1_module1 = project1.get('module1'); // Returns the logger object for module1
+    project1_module1.log('this is a log for module1');
 
     // OR
-    var p1_m1 = debuggify.Logger.get('project1').get('module1'); // Directly get the module logger object
-    p1_m1.log('this is a log for module1');
+    var project1_module1 = debuggify.Logger.get('project1').get('module1'); // Directly get the module logger object
+    project1_module1.log('this is a log for module1');
 
 
 Modules Hierarchy
 
-    var p1_m1_s1 = debuggify.Logger.get('project1').get('module1'),get('submodule1');
-    p1_m1_s1.log('this is a log for submodule1');
+    var project1_module1_submodule1 = debuggify.Logger.get('project1').get('module1'),get('submodule1');
+    project1_module1_submodule1.log('this is a log for submodule1');
 
 Set Logging Level (optional). Every environment has it logging level already set
 
-    p1.setLevel(2); // Set warning and errors only for project on project p1
-    p1_m1.setLevel(0); // Show all types messages for all the children on module m1
+    project1.setLevel(2); // Set warning and errors only for project on project project1
+    project1_module1.setLevel(0); // Show all types messages for all the children on module module1
 
 **NOTE** Calling `.setLevel` on a logger will remove reinstall debugging methods for the new levels. This will also affect the behavior of all the children. For any module its nearest overridden parent level is used
 
-Set Flag for any message type (optional)
+<a name="setFlag"></a>Set Flag for any message type (optional)
 
-    p1.setFlag('error', true); // Set the flag for
+    project1.setFlag('error', true); // Set the flag for
 
 **NOTE** Calling `.setFlag` on a logger will only affect the state of current object. Its children module will not be affected
 
 Add a transport to a project
 
-    p1.addTransport('Console', {});
+    project1.addTransport('Console', {});
+
+*Control the parameter through URL* by enabline debug mode.Just add query string `project1__debug=true`.
+This is very powerful can be used it to change configuration for particular module.Ex.
+
+1.Change the environment.Following will change the environment to testing for project1 project.
+
+    urlString?project1__debug=true&env=testing
+
+2.To disable errors/logs/warnings for a particular module.Following will not throw warnings for module1 module for project1 project.
+
+    urlString?project1__debug=true&project1__module1__info=false&project1__module1__error=false
+
+**NOTE** The above is same as [setFlag]
+
+3.To show or hide properties.Following will not show timestamp property for module1 module for project1 project.
+
+    urlString?project1__debug=true&project1__module1__timestamp=false
+
+
+Get the *logger object* by its name.Following will return the logger object for project1 if it is exists else it will create a new logger object with project1 name.If you do not want to create a new logger object pass the 2nd parameter as false
+
+    debuggify.Logger.get(project1,true)
+
+
+Send message for specific type(logs,error,warning).Following will change the error message for module module1 to "This is an error message".
+
+    project1.message("This is an error message", module1, error)
 
 ### Collector ###
 
@@ -142,9 +199,22 @@ This component is responsible for collecting the logging messages from the globa
 #### Console ####
 Send the logs to the browser console if it exist
 
-    p1.add('Console', options)
+    project1.add('Console', options)
+
+## Bookmarklets ##
+
+Drag to the toolbar to start using them
+
+  - [logger.console.global] Overload window.console with debuggify Logger object and transport console
 
 ## Contributing ##
+
+  - Fork debuggify_js
+  - Create a topic branch - git checkout -b my_branch
+  - Rebase your branch so that all your changes are reflected in one commit
+  - Push to your branch - git push origin my_branch
+  - Create a Pull Request from your branch, include as much documentation as you can in the commit message/pull request, following these guidelines on writing a good commit message
+  - That's it!
 
 ### Bugs & Suggestions ###
 Make a new ticket for new bugs / suggestions at [github issue tracker]
@@ -160,6 +230,23 @@ Make a new ticket for new bugs / suggestions at [github issue tracker]
 
 **NOTE**: currently the `debuggify.js` file comes with console transport. In future we will be supporting many different transports like `websockets`, `http`
 
+
+### Contacts ####
+
+**Email**: contact@debuggify.net
+
+**Mailing List**: debuggify@googlegroups.com
+
+**Twitter**: [@d3buggify]
+
+**IRC**:
+
+    Server: irc.freenode.net
+    Port: 6667
+    Rooms: #debuggify
+
+
+
 ## Inspirations ##
   - [winston]
   - [socket.io]
@@ -168,15 +255,21 @@ Make a new ticket for new bugs / suggestions at [github issue tracker]
 
 #### Author: [@Agarwal_Ankur] ####
 
+#### Contributors: [@geniussandy] ####
+
 *Free Software, Fuck Yeah!*
 
   [winston]: https://github.com/flatiron/winston
   [socket.io]: https://github.com/learnboost/socket.io
   [github issue tracker]: https://github.com/debuggify/debuggify_js/issues
-  [@Agarwal_Ankur]: http://twitter.com/Agarwal_Ankur
+  [@Agarwal_Ankur]: https://twitter.com/Agarwal_Ankur
+  [@geniussandy]: https://twitter.com/geniussandy
+  [@d3buggify]: https://twitter.com/d3buggify
   [Logger]: #logger
   [Collector]: #collector
   [Transports]: #transports
   [stacktrace]: https://github.com/eriwen/javascript-stacktrace
   [requirejs]: https://github.com/jrburke/requirejs
-  [architecture]: images/architecture.png "Architecture"
+  [architecture]: http://cdn.debuggify.net/images/architecture.png "Architecture"
+  [setFlag]:#setFlag
+  [logger.console.global]: javascript:void((function(){var%20e=document.createElement('script');e.setAttribute('type','text/javascript');e.setAttribute('charset','UTF-8');e.setAttribute('src','http://cdn.debuggify.net/debuggify/debuggify.logger.console.global.js?r='+Math.random()*99999999);document.body.appendChild(e)})()) "Drag me to the toolbar"

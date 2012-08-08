@@ -6,8 +6,8 @@
 
 (function (debuggify, undefined) {
 
-  var collector = debuggify.Collector = debuggify.Collector || (function (w, d, extend, globals, transports) {
-
+  var collector = debuggify.Collector = debuggify.Collector || (function (w, d, extend, globals, transports, envs) {
+    var console = globals.selfLogger;
     /**
      * Collection of commands which are available in collector
      * @type {Object}
@@ -26,9 +26,8 @@
           this.transports.push(new transports[transportName](options));
 
         } else {
-          throw 'transport ' + transportName + ' is not defined';
+          console.warn('transport ' + transportName + ' is not defined');
         }
-
       }
     };
 
@@ -41,7 +40,7 @@
      * @return {Boolean}     true if Array else false
      */
     function isArray (obj) {
-        return toString.call(obj) === "[object Array]";
+      return toString.call(obj) === "[object Array]";
     }
 
     /**
@@ -140,13 +139,15 @@
 
           for(transport in self.transports){
             if(self.transports.hasOwnProperty(transport)) {
-
-              try {
-                self.transports[transport].send.apply(self.transports[transport], args);
-              } catch (e){
-                console.warn(self.transports[transport].name + ': Sending via transport failed: ' + e);
-              }
-
+                var t = self.transports[transport];
+                try {
+                  var level = self.options.messagesTypes[args[1].type];
+                  if(typeof level !== "undefined" && t.options.level <= level) {
+                    t.send.apply(self.transports[transport], args);
+                  }
+                } catch (e){
+                  console.warn(t.name + ': Sending via transport failed: ' + e);
+                }
             }
           }
         }
@@ -192,6 +193,6 @@
       process: processProjects
     };
 
-  }(debuggify.win, debuggify.doc, debuggify.extend, debuggify.globals, debuggify.Transports));
+  }(debuggify.win, debuggify.doc, debuggify.extend, debuggify.globals, debuggify.Transports, debuggify.envs));
 
 }(debuggify));

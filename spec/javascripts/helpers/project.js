@@ -220,22 +220,22 @@ function testProject(projectName, env) {
   // $('#projects').append('')
 
   // Set the development environment
-  logger.setEnv('development');
+  // logger.setEnv('development');
 
   // Setup debugging for module1
-  var module1logger = logger.module('module1', {});
+  var module1logger = logger.addModule('module1', {});
 
   // Setup debugging for module2
-  var module2logger = logger.module('module2', {});
+  var module2logger = logger.addModule('module2', {});
 
   // Setup debugging for module3f
-  var module3logger = logger.module('module3', {});
+  var module3logger = logger.addModule('module3', {});
 
   // Setup debugging for module3.1
-  var module31logger = module3logger.module('module3.1');
+  var module31logger = module3logger.addModule('module3.1');
 
   // Setup debugging for module3.2
-  var module32logger = logger.module('module3.2', {}, module3logger);
+  var module32logger = logger.addModule('module3.2', {}, module3logger);
 
   testDebugging(module1logger);
   testDebugging(module2logger);

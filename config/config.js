@@ -1,22 +1,41 @@
-
-// Development Configuration File for requriejs
+/**
+ * Configuration File for requriejs
+ * @author Ankur Agarwal
+ */
 
 require.config({
+
   baseUrl: '../src/',
+
   paths: {
     'stacktrace': ['vendor/javascript-stacktrace/stacktrace'],
     'jquery': ['https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min']
-
   },
+
   shim: {
 
     'debuggify': {
-
       exports: 'window.debuggify'
     },
 
+    'environments': {
+      deps: ['debuggify']
+    },
+
+    'environments/development': {
+      deps: ['environments']
+    },
+
+    'environments/production': {
+      deps: ['environments']
+    },
+
+    'environments/testing': {
+      deps: ['environments']
+    },
+
     'debuggify.logger': {
-      deps: ['debuggify', 'stacktrace', 'utils'],
+      deps: ['debuggify', 'environments', 'stacktrace', 'utils'],
       exports: 'debuggify.Logger'
     },
 
@@ -42,5 +61,13 @@ require.config({
     }
 
   }
+
+  // config: {
+  //   'debuggify.Logger': {
+
+  //   }
+  // }
+
+
 
 });
