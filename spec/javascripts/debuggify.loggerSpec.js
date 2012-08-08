@@ -385,15 +385,48 @@ describe("Debuggify Logger", ['debuggify.logger'], function(logger) {
     // });
   });
 
-  // describe("#module - add module",function(){
-  //   var p1,p2,p3,p4,project;
-  //   beforeEach(function(){
-  //     project = logger.create('project_module');
-  //   });
+  describe("#module - add module",function(){
+    var p1,p2,p3,p4,project,m1,m2;
+    p1 = logger.create('p1');
+    m1 = p1.module('m1');
+    p2 = logger.create('p2');
+    m2 = p1.module('m2',{},p2);
+    p3 = logger.create('p3');
+    m3 = p3.module('');
+    // p2.module('m2');
 
-  //   it("module add")
+    it('module to be not added with empty name',function(){
+      expect(m3.name).not.toBeDefined();
 
-  // });
+    });
+
+    it('check ',function(){
+      expect(m1.namespace).toBeDefined('p1__m1');
+
+    });
+
+    it("module added correct value returned",function(){
+      expect(p1.modules.m1).toEqual(m1);
+    });
+
+    it("verify added module name",function(){
+      expect(p1.modules.m1.name).toEqual('m1');
+    });
+
+
+    it("verify added module namespace",function(){
+      expect(p1.modules.m1.namespace).toEqual('p1__m1');
+    });
+
+    it("module added to different parent",function(){
+      expect(p2.modules.m2).toEqual(m2);
+    });
+
+    it("expect to throw error when module added with already existing name",function(){
+      expect(p2.module('m2')).toBeDefined();
+
+    });
+  });
 
 
 
