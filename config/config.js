@@ -9,7 +9,8 @@ require.config({
 
   paths: {
     'stacktrace': ['vendor/javascript-stacktrace/stacktrace'],
-    'jquery': ['https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min']
+    'jquery': ['https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min'],
+    'socketio': ['vendor/socketio/socket.io']
   },
 
   shim: {
@@ -56,7 +57,7 @@ require.config({
     },
 
     'transports/websockets': {
-      deps: ['debuggify.collector'],
+      deps: ['debuggify.collector', 'socketio'],
       exports: 'debuggify.Transports.Websockets'
     }
 
