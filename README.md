@@ -1,4 +1,5 @@
-Debuggify.js (Work In Progress)
+Debuggify.js [![Master Build Status](https://secure.travis-ci.org/debuggify/debuggify_js.png?branch=master)](http://travis-ci.org/debuggify/debuggify_js)
+[![Development Build Status](https://secure.travis-ci.org/debuggify/debuggify_js.png?branch=development)](http://travis-ci.org/debuggify/debuggify_js)
 ===========
 
 A modern multi-transport javascript debugging library for browsers focuses on enhancing development experience.
