@@ -1,8 +1,9 @@
-Debuggify.js [![Master Build Status](https://secure.travis-ci.org/debuggify/debuggify_js.png?branch=master)](http://travis-ci.org/debuggify/debuggify_js)
-[![Development Build Status](https://secure.travis-ci.org/debuggify/debuggify_js.png?branch=development)](http://travis-ci.org/debuggify/debuggify_js)
+Debuggify.js
 ===========
 
 A modern multi-transport javascript debugging library for browsers focuses on enhancing development experience.
+
+**NOTE:** Work In Progress.
 
 ![][architecture]
 
@@ -28,6 +29,14 @@ Debuggify.js is designed to be a simple and universal debugging library to work 
   - Manage debugging message for any module on the fly
   - Use URL parameters to manage settings
   - Optimizations for Production environment
+
+## Build Status ##
+
+**Master** [![Build Status](https://secure.travis-ci.org/debuggify/debuggify_js.png?branch=master)](http://travis-ci.org/debuggify/debuggify_js)
+
+**Development** [![Build Status](https://secure.travis-ci.org/debuggify/debuggify_js.png?branch=development)](http://travis-ci.org/debuggify/debuggify_js)
+
+**Testing** [![Build Status](https://secure.travis-ci.org/debuggify/debuggify_js.png?branch=testing)](http://travis-ci.org/debuggify/debuggify_js)
 
 ## Getting Started ##
 
