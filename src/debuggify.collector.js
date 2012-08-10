@@ -195,4 +195,6 @@
 
   }(debuggify.win, debuggify.doc, debuggify.extend, debuggify.globals, debuggify.Transports, debuggify.envs));
 
+  collector.init();
+
 }(debuggify));

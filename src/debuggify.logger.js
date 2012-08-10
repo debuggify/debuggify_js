@@ -789,15 +789,15 @@
     selfLogger.genericMessage([], '_init');
 
     // Overload the window.console
-    try {
-      if(!w.console || typeof w.console.isLogger === "undefined") {
-        var console = project('global');
-        console.addTransport('Console', {});
-        w.console = console;
-      }
-    } catch (e) {
-      selfLogger.warn('error overloading window.console: ' + e);
-    }
+    // try {
+    //   if(!w.console || typeof w.console.isLogger === "undefined") {
+    //     var console = project('global');
+    //     console.addTransport('Console', {});
+    //     w.console = console;
+    //   }
+    // } catch (e) {
+    //   selfLogger.warn('error overloading window.console: ' + e);
+    // }
 
 
     registerForErrors();

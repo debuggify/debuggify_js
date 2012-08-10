@@ -100,7 +100,10 @@
      * @type {Object}
      * @todo Convert to array
      */
-    transports: {}
+    transports: {
+      'Console': {},
+      'Websockets': {}
+    }
 
   };
 }(debuggify.envs));

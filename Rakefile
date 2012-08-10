@@ -28,6 +28,11 @@ task "deploy" do
   run_locally "cap deploy", "Deploying using capistrano"
 end
 
+
+task "deploy:s3cmd" do
+  run_locally "s3cmd sync  public/ s3://cdn.debuggify.net --acl-public", "Deploying using s3cmd"
+end
+
 task "test" do
   ENV["JASMINE_HOST"] = "http://local.debuggify.net"
   ENV["JASMINE_BROWSER"] = "firefox"
