@@ -7,7 +7,7 @@
 (function (debuggify, undefined) {
 
   var collector = debuggify.Collector = debuggify.Collector || (function (w, d, extend, globals, transports, envs) {
-    var console = globals.selfLogger;
+
     /**
      * Collection of commands which are available in collector
      * @type {Object}
@@ -26,7 +26,7 @@
           this.transports.push(new transports[transportName](options));
 
         } else {
-          console.warn('transport ' + transportName + ' is not defined');
+          globals.selfLogger.warn('transport ' + transportName + ' is not defined');
         }
       }
     };
@@ -146,7 +146,7 @@
                   t.send.apply(self.transports[transport], args);
                 }
               } catch (e){
-                console.warn(t.name + ': Sending via transport failed: ' + e);
+                globals.selfLogger.warn(t.name + ': Sending via transport failed: ' + e);
               }
             }
           }
@@ -158,7 +158,7 @@
 
       } else {
 
-        console.log(cmd);
+        globals.selfLogger.log(cmd);
         // Handle Invalid Data
         throw "Expecting array, got " + typeof cmd;
 

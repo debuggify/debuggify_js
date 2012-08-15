@@ -81,12 +81,12 @@
 
         socket.on('module', function(message) {
 
-          console.log(message);
+          globals.selfLogger.log(message);
         });
 
         socket.on('message', function(message) {
 
-          console.log(message);
+          globals.selfLogger.log(message);
 
           switch(message.cmd){
 
