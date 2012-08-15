@@ -25,8 +25,8 @@
       self.defaults = {
         level: 0,
         timestamp: true,
-        host: 'server.debuggify.net',
-        port: '80'
+        host: 'localhost',
+        port: '9999'
       };
 
       self.options = extend(options, self.defaults);
