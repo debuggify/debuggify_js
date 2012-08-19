@@ -40,6 +40,11 @@ require.config({
       exports: 'debuggify.Logger'
     },
 
+    'debuggify.remoteconsole': {
+      deps: ['debuggify', 'environments', 'transports/websockets'],
+      exports: 'debuggify.RemoteConosle'
+    },
+
     'debuggify.transports': {
       deps: ['debuggify'],
       exports: 'debuggify.Transports'

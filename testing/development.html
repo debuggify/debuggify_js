@@ -10,8 +10,11 @@
     <script type="text/javascript" src="/src/vendor/requirejs/require.js"></script>
     <script type="text/javascript" src="/config/config.js"></script>
 
+
     <script type="text/javascript" src="/spec/javascripts/helpers/project.js"></script>
 
+    <!-- <script src="http://localhost:3400/client.js"></script> -->
+    <!-- <script src="http://jsconsole.com/remote.js?4FCA2556-5B03-4AED-A456-760AA896ACAB"></script> -->
   </head>
   <body>
 
@@ -26,15 +29,37 @@
 
     <script type="text/javascript">
 
-      require(['environments/development', 'environments/production', 'environments/testing', 'debuggify.logger', 'transports/websockets', 'transports/console','http://' + websocketConfig.host + ':' + websocketConfig.port + '/socket.io/socket.io.js'], function(){
+      require([
+        // Environments
+        'environments/development',
+        'environments/production',
+        'environments/testing',
+
+        // Logger
+        'debuggify.logger',
+
+
+        // Transports
+        'transports/websockets',
+        'transports/console',
+        'http://' + websocketConfig.host + ':' + websocketConfig.port + '/socket.io/socket.io.js',
+
+        // Remote Console
+        'debuggify.remoteconsole'
+
+      ], function(){
+
+        var l = debuggify.Logger.get('debuggify')
+        l.addTransport('Console', {});
+        l.addTransport('Websockets', {});
 
         config.defaults.transports = {
           'Websockets': websocketConfig,
           'Console' : {}
         };
 
-        testProject('foo');
-        testProject('bar');
+        // testProject('foo');
+        // testProject('bar');
 
       });
 

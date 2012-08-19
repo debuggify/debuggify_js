@@ -7,7 +7,7 @@
  *
  */
 
-!(function (debuggify, undefined) {
+(function (debuggify, undefined) {
 
   var transports = debuggify.Transports;
   var websockets = transports.Websockets = transports.Websockets || (function (w, d, extend, globals, transports) {
@@ -40,6 +40,7 @@
       if( typeof sockets_[self.options.hostname] === 'undefined') {
 
         var info = sockets_[self.options.hostname] = {
+          prefix: 'dummy',
           status: false,
           autoReconnect: true,
           verbose: false,
@@ -50,21 +51,10 @@
 
         var socket = info.socket = io.connect(self.options.hostname) || io.connect('http://localhost:4000');
 
-        // socket.onopen = function() {
-        //   console.log('opened ' + self.options.hostname);
-        // };
-
-        // socket.onmessage = function(e) {
-        //   console.log('recived message', e.data);
-        // };
-
-        // socket.onclose = function() {
-        //   console.log('closed' + self.options.hostname);
-        // };
-
         // On connect update the socket list
         socket.on('connect', function() {
           info.status = true;
+          socket.emit('join_room', {prefix: info.prefix, agent: 'client'});
         });
 
         socket.on('disconnect', function() {
@@ -115,20 +105,34 @@
 
     Websocket.prototype.send = function (message, info) {
 
-
-//      console.log('Wensockets', arguments);
-      // if(this.socket) {
-        //is.socket.send(JSON.stringify(message));
         info.message = message;
         this.socket.socket.json.send(info);
+    };
+
+    Websocket.prototype.serviceUrl = function () {
+      if(w.remoteJsServiceUrl) {
+        return w.remoteJsServiceUrl;
+      }
+      var script, scripts = d.getElementsByTagName('script');
+      for (var i in scripts) {
+        script = scripts[i].src;
+        if (script && script.match('/client.js')) break;
+      }
+      if(!script) {
+        var msg = "Could not find window.remoteJsServiceUrl try setting it explicitly";
+        alert(msg);
+        throw new Error(msg);
+      }
+      return script.replace('/client.js', '/');
+    };
 
 
-
-      // } else {
-
-        // throw a warning
-        // console.warn(message);
-      // }
+    Websocket.prototype.loadScript = function (src, loadCallback) {
+      var script = d.createElement("script");
+      script.src = src;
+      script.type = "text/javascript";
+      if (loadCallback) script.onload = loadCallback;
+      d.getElementsByTagName("head")[0].appendChild(script);
     };
 
     return Websocket;
