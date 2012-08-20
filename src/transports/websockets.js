@@ -15,6 +15,8 @@
 
     var sockets_ = {};
 
+    var delimiter = '_';
+
     // Websocket
     function Websocket (options) {
 
@@ -26,7 +28,13 @@
         level: 0,
         timestamp: true,
         host: 'localhost',
-        port: '9999'
+        port: '9999',
+        prefix: 'dummy',
+        channel: 'logger',
+        agent: 'client',
+        publish: 'logger',
+        subscribe: null,
+        onMessage: null
       };
 
       self.options = extend(options, self.defaults);
@@ -37,10 +45,9 @@
       self.options.hostname = 'http://' + self.options.host + ':' + self.options.port;
 
       // Reuse socket if already exist for this hostname
-      if( typeof sockets_[self.options.hostname] === 'undefined') {
+      // if( typeof sockets_[self.options.hostname ] === 'undefined') {
 
         var info = sockets_[self.options.hostname] = {
-          prefix: 'dummy',
           status: false,
           autoReconnect: true,
           verbose: false,
@@ -50,11 +57,15 @@
         };
 
         var socket = info.socket = io.connect(self.options.hostname) || io.connect('http://localhost:4000');
+        self.socket = socket;
 
         // On connect update the socket list
         socket.on('connect', function() {
+
           info.status = true;
-          socket.emit('join_room', {prefix: info.prefix, agent: 'client'});
+          socket.json.emit('register', {prefix: options.prefix, agent: 'client'});
+          self.subscribe(self.options.subscribe);
+
         });
 
         socket.on('disconnect', function() {
@@ -67,11 +78,6 @@
 
             info.socket.connect();
           }
-        });
-
-        socket.on('module', function(message) {
-
-          globals.selfLogger.log(message);
         });
 
         socket.on('message', function(message) {
@@ -90,12 +96,15 @@
               break;
 
             default:
-
+            socket.emit('message', 'No such command ' + message.cmd);
+            if(typeof onMessage === 'function') {
+              onMessage(message);
+            }
           }
 
         });
 
-      }
+      // }
 
       self.socket = sockets_[self.options.hostname];
 
@@ -106,7 +115,41 @@
     Websocket.prototype.send = function (message, info) {
 
         info.message = message;
-        this.socket.socket.json.send(info);
+        this.publish(info);
+    };
+
+    Websocket.prototype.subscribe = function (channel, callback) {
+
+      if(!channel ) return false;
+
+      var self = this;
+      var options = self.options;
+      var socket = self.socket.socket;
+
+      // Send a request to server to subscribe for the event
+      socket.emit('subscribe', {channel: channel});
+
+      // listen for the event
+      // socket.on(options.prefix + options.delimiter + channel, callback);
+
+      return true;
+    };
+
+    Websocket.prototype.publish = function (data, channel) {
+
+      var self = this;
+      var options = self.options;
+      var socket = self.socket.socket;
+
+      channel = channel || options.publish;
+
+      if(!channel) return false;
+
+      return socket.json.emit('publish', {
+        channel: channel,
+        data: data
+      });
+
     };
 
     Websocket.prototype.serviceUrl = function () {
@@ -120,7 +163,7 @@
       }
       if(!script) {
         var msg = "Could not find window.remoteJsServiceUrl try setting it explicitly";
-        alert(msg);
+        // alert(msg);
         throw new Error(msg);
       }
       return script.replace('/client.js', '/');
