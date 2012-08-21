@@ -79,8 +79,8 @@
           }
         });
 
-        socket.on('message', function(data) {
-
+        socket.on('message', function(packet) {
+          var data = packet.data;
           switch(data.cmd){
 
             case 'reload':
@@ -88,15 +88,11 @@
               d.location.href = d.location.href;
               break;
 
-            case 'dummy':
-
-              break;
-
             default:
-            socket.emit('message', 'No such command ' + data.cmd);
-            if(typeof self.options.onMessage === 'function') {
-              self.options.onMessage(data.message);
-            }
+
+              if(typeof self.options.onMessage === 'function') {
+                self.options.onMessage(packet);
+              }
           }
 
         });
@@ -144,6 +140,20 @@
 
       return socket.json.emit('publish', {
         channel: channel,
+        data: data
+      });
+
+    };
+
+    Websocket.prototype.sendTo = function (data, to) {
+
+      var self = this;
+      var socket = self.socket.socket;
+
+      if(!to) return false;
+
+      return socket.json.emit('publish', {
+        to: to,
         data: data
       });
 
