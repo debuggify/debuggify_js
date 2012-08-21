@@ -29,8 +29,7 @@
         timestamp: true,
         host: 'localhost',
         port: '9999',
-        prefix: 'dummy',
-        channel: 'logger',
+        prefix: 'debuggify',
         agent: 'client',
         publish: 'logger',
         subscribe: null,
@@ -80,11 +79,9 @@
           }
         });
 
-        socket.on('message', function(message) {
+        socket.on('message', function(data) {
 
-          globals.selfLogger.log(message);
-
-          switch(message.cmd){
+          switch(data.cmd){
 
             case 'reload':
               // Set the url instead of reload to avoid refresh action
@@ -96,9 +93,9 @@
               break;
 
             default:
-            socket.emit('message', 'No such command ' + message.cmd);
-            if(typeof onMessage === 'function') {
-              onMessage(message);
+            socket.emit('message', 'No such command ' + data.cmd);
+            if(typeof self.options.onMessage === 'function') {
+              self.options.onMessage(data.message);
             }
           }
 
@@ -118,7 +115,7 @@
         this.publish(info);
     };
 
-    Websocket.prototype.subscribe = function (channel, callback) {
+    Websocket.prototype.subscribe = function (channel) {
 
       if(!channel ) return false;
 
