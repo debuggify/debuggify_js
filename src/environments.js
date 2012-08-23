@@ -102,7 +102,11 @@
      */
     transports: {
       'Console': {},
-      'Websockets': {}
+      'Websockets': {
+        prefix: 'debuggify',
+        publish: 'logger',
+        subscribe: null
+      }
     }
 
   };

@@ -48,6 +48,7 @@
 
         var info = sockets_[self.options.hostname] = {
           status: false,
+          isRegistered: false,
           autoReconnect: true,
           verbose: false,
           reconnectAttempts: 0,
@@ -57,18 +58,20 @@
 
         var socket = info.socket = io.connect(self.options.hostname) || io.connect('http://localhost:4000');
         self.socket = socket;
+        self.info = info;
 
         // On connect update the socket list
         socket.on('connect', function() {
 
           info.status = true;
-          socket.json.emit('register', {prefix: options.prefix, agent: 'client'});
+          self.register();
           self.subscribe(self.options.subscribe);
 
         });
 
         socket.on('disconnect', function() {
           info.status = false;
+          info.isRegistered = false;
 
           // Reconnect
           if(info.autoReconnect && !info.autoReconnect && info.maxReconnectAttemps > info.reconnectAttempts) {
@@ -105,6 +108,15 @@
 
     Websocket.prototype = new transports('Websockets');
 
+
+    Websocket.prototype.register = function (message, info) {
+
+      if(!this.info.isRegistered) {
+        this.socket.socket.json.emit('register', {prefix: this.options.prefix, agent: 'client'});
+        this.info.isRegistered = true;
+      }
+    };
+
     Websocket.prototype.send = function (message, info) {
 
         info.message = message;
@@ -133,6 +145,8 @@
       var self = this;
       var options = self.options;
       var socket = self.socket.socket;
+
+      self.register();
 
       channel = channel || options.publish;
 

@@ -17,7 +17,7 @@
       /**
        * Add a transport to a logger object
        * @param {string} transportName Name of the transport
-       * @param {Object} options       settinngs required for the transport
+       * @param {Object} options       settings required for the transport
        */
       _addTransport: function (transportName, options) {
 
