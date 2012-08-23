@@ -29,13 +29,6 @@
     var urlParameters;
 
     /**
-     * Keep different configurations
-     *
-     * @type {Object}
-     */
-    var environments_ = envs;
-
-    /**
      * Store the status of message types
      *
      * @type {Object}
@@ -422,6 +415,23 @@
       }
     }
 
+    /**
+     * Get the settings from all different loaded environments
+     * @param  {string} key the module / utility for which settings is required
+     * @return {Object}     the environments objects containing only the settings related to key
+     */
+    function getAllEnvironments(key) {
+      var e = {};
+      var prop;
+      for(prop in envs) {
+        if(envs.hasOwnProperty(prop) && typeof envs[prop][key] !== 'undefined' ) {
+          e[prop] = envs[prop][key];
+        } else {
+          e[key] = {};
+        }
+      }
+      return e;
+    }
 
     /**
      * Generate and install dynamic function for different message types
@@ -503,10 +513,11 @@
       }
 
       var env = {};
+      var envs_ = getAllEnvironments('logger');
 
       // Calculate the defaults extending the user and library defaults
       var defaults = (typeof environments.defaults !== 'undefined') ?
-        extend(environments.defaults, environments_.defaults) : environments_.defaults;
+        extend(environments.defaults, envs_.defaults) : envs_.defaults;
 
       var i;
       var count = 0;
@@ -515,17 +526,17 @@
       for (i in environments){
         if(environments.hasOwnProperty(i)) {
 
-          if(typeof environments_[i] === 'undefined') {
+          if(typeof envs_[i] === 'undefined') {
 
             // No similar env found so override with defaults to get
             // the final settings
-            environments_[i] = extend(environments[i], defaults);
+            envs_[i] = extend(environments[i], defaults);
 
           } else {
 
             // Overide the already defined envs
             // and then overide the defaults
-            env[i] = extend(extend(environments[i], environments_[i]), defaults);
+            env[i] = extend(extend(environments[i], envs_[i]), defaults);
           }
         }
 

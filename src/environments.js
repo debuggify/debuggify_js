@@ -6,64 +6,98 @@
    */
   envs.defaults = {
 
+    apikey: null,
+
     /**
-     * Optimize for logger if enabled, normally to be enabled in production mode
+     * Logger Settings
      *
-     * @type {Boolean}
+     * @type {Object}
      * @todo Implement it
      */
-    optimize: false,
+    logger: {
 
-    /**
-     * To push the data to collector or not
-     *
-     * @type {Boolean}
-     * @todo Implement it
-     */
-    collector: true,
+      /**
+       * Optimize for logger if enabled, normally to be enabled in production mode
+       *
+       * @type {Boolean}
+       * @todo Implement it
+       */
+      optimize: false,
 
-    /**
-     * Save module history
-     *
-     * @type {Boolean}
-     * @todo Implement it
-     */
-    history: true,
+      /**
+       * To push the data to collector or not
+       *
+       * @type {Boolean}
+       * @todo Implement it
+       */
+      collector: true,
 
-    /**
-     * Enable timestamp with messages or not
-     *
-     * @type {Boolean}
-     * @todo Implement it
-     */
-    timestamp: true,
+      /**
+       * Save module history
+       *
+       * @type {Boolean}
+       * @todo Implement it
+       */
+      history: true,
 
-    /**
-     * Control the message types
-     *
-     * @type {Enum}
-     *
-     * TRACE: 0,
-     * INFO: 1,
-     * WARN: 2,
-     * ERROR: 3,
-     * SILENT: 4
-     */
-    level: 0,
+      /**
+       * Enable timestamp with messages or not
+       *
+       * @type {Boolean}
+       * @todo Implement it
+       */
+      timestamp: true,
 
-    /**
-     * Prefix for the flag variable
-     *
-     * @type {String}
-     */
-    flagPrefix: '__',
+      /**
+       * Control the message types
+       *
+       * @type {Enum}
+       *
+       * TRACE: 0,
+       * INFO: 1,
+       * WARN: 2,
+       * ERROR: 3,
+       * SILENT: 4
+       */
+      level: 0,
 
-    /**
-     * Prefix for the function name
-     *
-     * @type {String}
-     */
-    functionPrefix: '',
+      /**
+       * Prefix for the flag variable
+       *
+       * @type {String}
+       */
+      flagPrefix: '__',
+
+      /**
+       * Prefix for the function name
+       *
+       * @type {String}
+       */
+      functionPrefix: '',
+
+      /**
+       * Different types of message types supported
+       *
+       * @type {Object}
+       * @todo Add more messagetypes
+       *
+       */
+      messagesTypes: {
+        'log': 0,
+        'info': 1,
+        'warn': 2,
+        'error': 3
+      },
+
+      transports: {
+        'Console': {},
+        'Websockets': {
+          prefix: 'debuggify',
+          publish: 'logger',
+          subscribe: null
+        }
+      }
+    },
 
     /**
      * Message format
@@ -80,19 +114,6 @@
      */
     compiledTemplate: false,
 
-    /**
-     * Different types of message types supported
-     *
-     * @type {Object}
-     * @todo Add more messagetypes
-     *
-     */
-    messagesTypes: {
-      'log': 0,
-      'info': 1,
-      'warn': 2,
-      'error': 3
-    },
 
     /**
      * All the transports supported
@@ -104,7 +125,7 @@
       'Console': {},
       'Websockets': {
         prefix: 'debuggify',
-        publish: 'logger',
+        publish: null,
         subscribe: null
       }
     }
