@@ -54,6 +54,9 @@ task "build", :key, :dir do |t, args|
   run_locally "rm -Rf ./public/#{args.dir}", "Remove #{args.dir} directory"
   run_locally "cp ./build/release ./public/#{args.dir} -Rp", "copy release files"
 
+  # Add to git
+  # run_locally "git add public/#{args.dir}", "Add file to git"
+
   puts "Build successful, Check the path public/#{args.dir} "
 
 end
