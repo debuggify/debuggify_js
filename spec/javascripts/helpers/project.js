@@ -238,10 +238,10 @@ function testProject(projectName, env) {
   var module32logger = logger.addModule('module3.2', {}, module3logger);
 
   testDebugging(module1logger);
-  // testDebugging(module2logger);
-  // testDebugging(module3logger);
-  // testDebugging(module31logger);
-  // testDebugging(module32logger);
+  testDebugging(module2logger);
+  testDebugging(module3logger);
+  testDebugging(module31logger);
+  testDebugging(module32logger);
 }
 
 /**
