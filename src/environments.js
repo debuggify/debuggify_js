@@ -6,15 +6,13 @@
    */
   envs.defaults = {
 
-    apikey: null,
-
     /**
      * Logger Settings
      *
      * @type {Object}
      * @todo Implement it
      */
-    logger: {
+    Logger: {
 
       /**
        * Optimize for logger if enabled, normally to be enabled in production mode
@@ -119,15 +117,40 @@
      * All the transports supported
      *
      * @type {Object}
-     * @todo Convert to array
      */
-    transports: {
-      'Console': {},
-      'Websockets': {
-        prefix: 'debuggify',
-        publish: null,
-        subscribe: null
-      }
+
+    // These defaults values are set according to the development environment
+    // To use in production set custom values in the production file
+
+//>>includeStart("websocketsInclude", pragmas.consoleInclude);
+
+    Console: {},
+
+//>>includeEnd("consoleInclude");
+
+//>>includeStart("websocketsInclude", pragmas.websocketsInclude);
+
+    Websockets: {
+      prefix: 'debuggify',
+      publish: null,
+      subscribe: null
+    },
+
+//>>includeEnd("websocketsInclude");
+
+//>>excludeStart("httpExclude", pragmas.httpExclude);
+
+    Http: {
+      level: 0,
+      timestamp: true,
+      domain: 'debuggify.net',
+      port: '9001',
+    },
+
+//>>excludeEnd("httpExclude");
+
+    all: {
+      apikey: 'local'
     }
 
   };

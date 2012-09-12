@@ -9,6 +9,7 @@ require.config({
 
   paths: {
     'stacktrace': ['vendor/javascript-stacktrace/stacktrace'],
+    'janky.post': ['vendor/janky.post/janky.post'],
     'jquery': ['https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min'],
     'socketio': ['vendor/socketio/socket.io']
   },
@@ -55,10 +56,14 @@ require.config({
       exports: 'debuggify.Collector'
     },
 
-
     'transports/console': {
       deps: ['debuggify.collector'],
       exports: 'debuggify.Transports.Console'
+    },
+
+    'transports/http': {
+      deps: ['debuggify.collector', 'janky.post'],
+      exports: 'debuggify.Transports.Http'
     },
 
     'transports/websockets': {

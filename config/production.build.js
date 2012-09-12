@@ -67,7 +67,7 @@
     //- "closure.keepLines": Same as closure option, but keeps line returns
     //in the minified files.
     //- "none": no minification will be done.
-    optimize: "uglify",
+    optimize: "none",
 
     //If using UglifyJS for script optimization, these config options can be
     //used to pass configuration values to UglifyJS.
@@ -136,7 +136,11 @@
     //trimming is only done if the code is minified via UglifyJS or
     //Closure Compiler.
     pragmas: {
-        productionInclude: true
+        productionInclude: true,
+        consoleInclude: false,
+        websocketsInclude: false,
+        httpExclude: true,
+        httpInclude: false
     },
 
     //Same as "pragmas", but only applied once during the file save phase
@@ -159,10 +163,11 @@
     //The code branch trimming only happens if minification with UglifyJS or
     //Closure Compiler is done. For more information, see:
     //http://requirejs.org/docs/optimization.html#hasjs
-//    has: {
-//        'function-bind': true,
-//        'string-trim': false
-//    },
+   has: {
+       'function-bind': true,
+       'string-trim': false,
+       'http': false
+   },
 
     //Similar to pragmasOnSave, but for has tests -- only applied during the
     //file save phase of optimization, where "has" is applied to both
@@ -245,7 +250,29 @@
        },
 
        {
-           name: "release/debuggify.logger.websockets"
+           name: "release/debuggify.logger.websockets",
+
+           override: {
+               pragmas: {
+                   websocketsInclude: true,
+                   consoleInclude: true
+               },
+               has: {
+                http: true
+               }
+           }
+       },
+
+       {
+           name: "release/debuggify.logger.http",
+
+           override: {
+               pragmas: {
+                   httpExclude: false,
+                   consoleInclude: false
+               }
+           }
+
        },
 
        {
@@ -369,6 +396,33 @@
 //        //This is just a contrived example.
 //        return contents.replace(/bar/g, 'foo');
 //    }
+//
+
+
+    //Introduced in 2.0.2: if set to true, then the optimizer will add a
+    //define(require, exports, module) {}); wrapper around any file that seems
+    //to use commonjs/node module syntax (require, exports) without already
+    //calling define(). This is useful to reuse modules that came from
+    //or are loadable in an AMD loader that can load commonjs style modules
+    //in development as well as AMD modules, but need to have a built form
+    //that is only AMD. Note that this does *not* enable different module
+    //ID-to-file path logic, all the modules still have to be found using the
+    //requirejs-style configuration, it does not use node's node_modules nested
+    //path lookups.
+    cjsTranslate: true,
+
+    //Introduced in 2.0.2: a bit experimental.
+    //Each script in the build layer will be turned into
+    //a JavaScript string with a //@ sourceURL comment, and then wrapped in an
+    //eval call. This allows some browsers to see each evaled script as a
+    //separate script in the script debugger even though they are all combined
+    //in the same file. Some important limitations:
+    //1) Do not use in IE if conditional comments are turned on, it will cause
+    //errors:
+    //http://en.wikipedia.org/wiki/Conditional_comment#Conditional_comments_in_JScript
+    //2) It is only useful in optimize: 'none' scenarios. The goal is to allow
+    //easier built layer debugging, which goes against minification desires.
+    useSourceUrl: true,
 
     dummy: {}
 })

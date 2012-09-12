@@ -5,7 +5,7 @@
  */
 (function( debuggify, undefined ) {
 
-  var logger = debuggify.Logger = debuggify.Logger || (function(w,d,extend, utils, globals, envs) {
+  var logger = debuggify.Logger = debuggify.Logger || (function(w, d, extend, utils, globals, envs) {
 
     /**
      * Regex to filter unwanted elements from the stack
@@ -513,7 +513,7 @@
       }
 
       var env = {};
-      var envs_ = getAllEnvironments('logger');
+      var envs_ = getAllEnvironments('Logger');
 
       // Calculate the defaults extending the user and library defaults
       var defaults = (typeof environments.defaults !== 'undefined') ?

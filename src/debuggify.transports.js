@@ -21,28 +21,31 @@
         globals.transports[name] = {};
       }
 
+      this.setDefaults(name);
     }
 
     /**
      * Extending the Transports prototype
      * @type {Object}
      */
-    Transports.prototype = {
+    Transports.prototype = debuggify;
 
-      initialize: function (level, timestamp) {
 
-        this.level = level;
-        this.timestamp = timestamp;
-      },
 
-      setLevel: function (level) {
-        this.level = level;
-      },
+    Transports.prototype.initialize = function (level, timestamp) {
 
-      send: function () {
-        throw 'Send is Not Implemented for transport' + this.name;
-      }
-    };
+      this.level = level;
+      this.timestamp = timestamp;
+    },
+
+    Transports.prototype.setLevel = function (level) {
+      this.level = level;
+    },
+
+    Transports.prototype.send = function () {
+      throw 'Send is Not Implemented for transport' + this.name;
+    }
+
 
    return Transports;
 
