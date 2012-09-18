@@ -138,7 +138,7 @@
 
 //>>includeEnd("websocketsInclude");
 
-//>>excludeStart("httpExclude", pragmas.httpExclude);
+//>>includeStart("httpInclude", pragmas.httpInclude);
 
     Http: {
       level: 0,
@@ -147,7 +147,7 @@
       port: '9001',
     },
 
-//>>excludeEnd("httpExclude");
+//>>includeEnd("httpInclude");
 
     all: {
       apikey: 'local'

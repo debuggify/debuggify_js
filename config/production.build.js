@@ -139,8 +139,7 @@
         productionInclude: true,
         consoleInclude: false,
         websocketsInclude: false,
-        httpExclude: true,
-        httpInclude: false
+        httpInclude: true
     },
 
     //Same as "pragmas", but only applied once during the file save phase
