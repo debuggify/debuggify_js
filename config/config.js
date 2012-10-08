@@ -8,10 +8,10 @@ require.config({
   baseUrl: '../src/',
 
   paths: {
-    'stacktrace': ['vendor/javascript-stacktrace/stacktrace'],
-    'janky.post': ['vendor/janky.post/janky.post'],
-    'jquery': ['https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min'],
-    'socketio': ['vendor/socketio/socket.io']
+    'stacktrace': 'vendor/javascript-stacktrace/stacktrace',
+    'janky.post': 'vendor/janky.post/janky.post',
+    'jquery': 'https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min',
+    'socketio': 'vendor/socketio/socket.io'
   },
 
   shim: {
@@ -76,11 +76,5 @@ require.config({
     }
 
   }
-
-  // config: {
-  //   'debuggify.Logger': {
-
-  //   }
-  // }
 
 });

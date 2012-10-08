@@ -129,7 +129,7 @@ var __dfy = __dfy || {};
     // These defaults values are set according to the development environment
     // To use in production set custom values in the production file
 
-//>>includeStart("websocketsInclude", pragmas.consoleInclude);
+//>>includeStart("consoleInclude", pragmas.consoleInclude);
 
     Console: {},
 

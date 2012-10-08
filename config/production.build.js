@@ -137,9 +137,9 @@
     //Closure Compiler.
     pragmas: {
         productionInclude: true,
-        consoleInclude: false,
+        consoleInclude: true,
         websocketsInclude: false,
-        httpInclude: true
+        httpInclude: false
     },
 
     //Same as "pragmas", but only applied once during the file save phase
@@ -253,8 +253,7 @@
 
            override: {
                pragmas: {
-                   websocketsInclude: true,
-                   consoleInclude: true
+                   websocketsInclude: true
                },
                has: {
                 http: true
@@ -267,8 +266,7 @@
 
            override: {
                pragmas: {
-                   httpExclude: false,
-                   consoleInclude: false
+                   httpInclude: true
                }
            }
 
