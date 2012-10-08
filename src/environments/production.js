@@ -3,7 +3,7 @@
    * Production Environment
    * @type {Object}
    */
-  envs.production = {
+  envs.production = envs.production || {
     silent: true,
     optimize: true,
     timestamp: false,
@@ -11,4 +11,4 @@
     transports: []
   };
 
-}(debuggify.envs));
+}(__dfy.envs));

@@ -36,7 +36,7 @@
 
       // Initialize the Transport Constructor
       self.initialize(self.options.level, self.options.timestamp);
-
+      //self.options.apikey = '47939b5d5cd5d55476885bd3492ad248'
       self.options.hostname = 'http://' + self.options.apikey + '.' + self.options.domain + ':' + self.options.port;
 
       if(!w.janky) {

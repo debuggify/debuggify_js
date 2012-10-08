@@ -1,10 +1,17 @@
-(function(envs) {
+var __dfy = __dfy || {};
+
+(function(d) {
+
+  // Set the default environment
+  d.env = d.env || 'development';
+
+  d.envs = d.envs || {};
 
   /**
    * Defaults values for Environment
    * @type {Object}
    */
-  envs.defaults = {
+  d.envs.defaults = {
 
     /**
      * Logger Settings
@@ -154,4 +161,4 @@
     }
 
   };
-}(debuggify.envs));
+}(__dfy));

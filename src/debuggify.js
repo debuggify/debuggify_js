@@ -13,8 +13,6 @@
 
     var version = '0.0.1';
 
-//    w._dfy = w._dfy || {};
-
     var globals = {
 
       // Sore the reference to the root node project for the tree
@@ -46,8 +44,8 @@
       self.win = w;
       self.doc= w.document;
       self.console = w.console || null;
-      self.envs = envs;
-      self.env = env;
+      self.envs = w.__dfy.envs;
+      self.env = w.__dfy.env;
       self.version = version;
     }
 
@@ -58,6 +56,25 @@
         // Initialize defaults
         this.setDefaults();
 
+      },
+
+      multilevelExtend: function(options, defaults) {
+
+
+        var i;
+
+        for(i in defaults) {
+          if (defaults.hasOwnProperty(i)) {
+
+            if(typeof options[i] === 'undefined') {
+              options[i] = defaults[i];
+            } else if(i.charCodeAt(0) >= "A".charCodeAt(0) && i.charCodeAt(0) <= "Z".charCodeAt(0) && typeof defaults[i] === "object")  {
+              this.multilevelExtend(options[i], defaults[i]);
+            }
+          }
+        }
+
+        return options;
       },
 
       extend: function(options, defaults) {
@@ -119,8 +136,19 @@
         var envs = this.envs;
 
         this.defaults = this.extend(this.extend(this.extend({}, envs.defaults[id]), envs[this.env][id]), envs.defaults.all);
-      }
+      },
 
+      setEnv: function (env) {
+        if(!env && this.env) {
+          env = this.env;
+        }
+
+        if(!env || typeof this.envs[env] === "undefined") {
+          return false;
+        }
+
+        this.options = this.multilevelExtend(this.extend({}, this.envs[env]), this.envs.defaults);
+      }
     }
 
     // var output = {
@@ -135,7 +163,10 @@
     // };
 
 
-    return new Debuggify();
+    var ret = new Debuggify();
+    ret.setEnv();
+
+    return ret;
 
   }());
 

@@ -3,9 +3,9 @@
    * Testing Environment
    * @type {Object}
    */
-  envs.testing = {
+  envs.testing = envs.testing || {
     silent: true,
     level: 2
   };
 
-}(debuggify.envs));
+}(__dfy.envs));

@@ -12,7 +12,6 @@ require([
 
   // Transport
   'transports/http'
-
 ]);
 
 //>>excludeEnd("norequireExclude");

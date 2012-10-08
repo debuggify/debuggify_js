@@ -3,6 +3,6 @@
    * Development Environment
    * @type {Object}
    */
-  envs.development = {};
+  envs.development = envs.development || {};
 
-}(debuggify.envs));
+}(__dfy.envs));

@@ -16,13 +16,13 @@ require.config({
 
   shim: {
 
+    // 'environments': {},
+
     'debuggify': {
-      exports: 'window.debuggify'
+      exports: 'window.debuggify',
+      deps: ['environments']
     },
 
-    'environments': {
-      deps: ['debuggify']
-    },
 
     'environments/development': {
       deps: ['environments']
@@ -34,6 +34,10 @@ require.config({
 
     'environments/testing': {
       deps: ['environments']
+    },
+
+    'utils': {
+      deps: ['debuggify']
     },
 
     'debuggify.logger': {
@@ -78,7 +82,5 @@ require.config({
 
   //   }
   // }
-
-
 
 });
