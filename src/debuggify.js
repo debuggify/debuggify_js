@@ -135,7 +135,11 @@
         this._id = id;
         var envs = this.envs;
 
-        this.defaults = this.extend(this.extend(this.extend({}, envs.defaults[id]), envs[this.env][id]), envs.defaults.all);
+        var all = envs.defaults.all;
+        all.apikey = __dfy.apikey
+        all.org = __dfy.org
+
+        this.defaults = this.extend(this.extend(this.extend({}, envs.defaults[id]), envs[this.env][id]), all);
       },
 
       setEnv: function (env) {
