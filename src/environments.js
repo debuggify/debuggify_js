@@ -95,12 +95,22 @@ var __dfy = __dfy || {};
       },
 
       transports: {
-        'Console': {},
+
+
+
+//>>includeStart("websocketsInclude", pragmas.websocketsInclude);
         'Websockets': {
           prefix: 'debuggify',
           publish: 'logger',
           subscribe: null
-        }
+        },
+//>>includeEnd("websocketsInclude");
+
+//>>includeStart("httpInclude", pragmas.httpInclude);
+        'Http': {},
+//>>includeEnd("httpInclude");
+
+	        'Console': {}
       }
     },
 
@@ -157,7 +167,8 @@ var __dfy = __dfy || {};
 //>>includeEnd("httpInclude");
 
     all: {
-      apikey: 'local'
+      apikey: 'local',
+      org: 'local'
     }
 
   };

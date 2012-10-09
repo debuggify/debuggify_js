@@ -22,22 +22,12 @@
 
       var self = this;
 
-      // These defaults values are set according to the development environment
-      // To use in production set custom values in the environments file
-      // self.defaults = {
-      //   level: 0,
-      //   timestamp: true,
-      //   apikey: 'local',
-      //   domain: 'debuggify.net',
-      //   port: '9001',
-      // };
-
       self.options = extend(options, self.defaults);
 
       // Initialize the Transport Constructor
       self.initialize(self.options.level, self.options.timestamp);
-      //self.options.apikey = '47939b5d5cd5d55476885bd3492ad248'
-      self.options.hostname = 'http://' + self.options.apikey + '.' + self.options.domain + ':' + self.options.port;
+
+      self.options.hostname = '//' + self.options.apikey + '.' + self.options.domain + ':' + self.options.port;
 
       if(!w.janky) {
         throw new Error ('janky lib not found');
@@ -49,41 +39,23 @@
     Http.prototype.send = function (message, info) {
 
       info.message = message;
+      info.org = this.options.org;
 
       if(w && w.janky) {
         w.janky({
 
-          url: this.options.hostname  + "/inputs/d00dadc0ffee",
+          url: this.options.hostname  + "/http",
 
           data: info,
-          // {
-            // foo: "xxzar",
-            // foobar: [1,2,3]
-            // multilevel: [1,2,3, [1,2,3]],
-            // j: {"bar": "bar"}
-            // len1: "1234567890qwertyuiopasdfghjklzxc1234567890qwertyuiopasdfghjklzxc1234567890qwertyuiopasdfghjklzxc1234567890qwertyuiopasdfghjklzxc1234567890qwertyuiopasdfghjklzxc1234567890qwertyuiopasdfghjklzxc1234567890qwertyuiopasdfghjklzxc1234567890qwertyuiopasdfghjklzxc1234567890qwertyuiopasdfghjklzxc1234567890qwertyuiopasdfghjklzxc",
-            // len2: "1234567890qwertyuiopasdfghjklzxc1234567890qwertyuiopasdfghjklzxc1234567890qwertyuiopasdfghjklzxc1234567890qwertyuiopasdfghjklzxc1234567890qwertyuiopasdfghjklzxc1234567890qwertyuiopasdfghjklzxc1234567890qwertyuiopasdfghjklzxc1234567890qwertyuiopasdfghjklzxc1234567890qwertyuiopasdfghjklzxc1234567890qwertyuiopasdfghjklzxc",
-            // len3: "1234567890qwertyuiopasdfghjklzxc1234567890qwertyuiopasdfghjklzxc1234567890qwertyuiopasdfghjklzxc1234567890qwertyuiopasdfghjklzxc1234567890qwertyuiopasdfghjklzxc1234567890qwertyuiopasdfghjklzxc1234567890qwertyuiopasdfghjklzxc1234567890qwertyuiopasdfghjklzxc1234567890qwertyuiopasdfghjklzxc1234567890qwertyuiopasdfghjklzxc",
-            // len4: "1234567890qwertyuiopasdfghjklzxc1234567890qwertyuiopasdfghjklzxc1234567890qwertyuiopasdfghjklzxc1234567890qwertyuiopasdfghjklzxc1234567890qwertyuiopasdfghjklzxc1234567890qwertyuiopasdfghjklzxc1234567890qwertyuiopasdfghjklzxc1234567890qwertyuiopasdfghjklzxc1234567890qwertyuiopasdfghjklzxc1234567890qwertyuiopasdfghjklzxc",
-            // len5: "1234567890qwertyuiopasdfghjklzxc1234567890qwertyuiopasdfghjklzxc1234567890qwertyuiopasdfghjklzxc1234567890qwertyuiopasdfghjklzxc1234567890qwertyuiopasdfghjklzxc1234567890qwertyuiopasdfghjklzxc1234567890qwertyuiopasdfghjklzxc1234567890qwertyuiopasdfghjklzxc1234567890qwertyuiopasdfghjklzxc1234567890qwertyuiopasdfghjklzxc",
-            // len6: "1234567890qwertyuiopasdfghjklzxc1234567890qwertyuiopasdfghjklzxc1234567890qwertyuiopasdfghjklzxc1234567890qwertyuiopasdfghjklzxc1234567890qwertyuiopasdfghjklzxc1234567890qwertyuiopasdfghjklzxc1234567890qwertyuiopasdfghjklzxc1234567890qwertyuiopasdfghjklzxc1234567890qwertyuiopasdfghjklzxc1234567890qwertyuiopasdfghjklzxc",
-            // len7: "1234567890qwertyuiopasdfghjklzxc1234567890qwertyuiopasdfghjklzxc1234567890qwertyuiopasdfghjklzxc1234567890qwertyuiopasdfghjklzxc1234567890qwertyuiopasdfghjklzxc1234567890qwertyuiopasdfghjklzxc1234567890qwertyuiopasdfghjklzxc1234567890qwertyuiopasdfghjklzxc1234567890qwertyuiopasdfghjklzxc1234567890qwertyuiopasdfghjklzxc",
-            // len8: "1234567890qwertyuiopasdfghjklzxc1234567890qwertyuiopasdfghjklzxc1234567890qwertyuiopasdfghjklzxc1234567890qwertyuiopasdfghjklzxc1234567890qwertyuiopasdfghjklzxc1234567890qwertyuiopasdfghjklzxc1234567890qwertyuiopasdfghjklzxc1234567890qwertyuiopasdfghjklzxc1234567890qwertyuiopasdfghjklzxc1234567890qwertyuiopasdfghjklzxc",
-            // len9: "1234567890qwertyuiopasdfghjklzxc1234567890qwertyuiopasdfghjklzxc1234567890qwertyuiopasdfghjklzxc1234567890qwertyuiopasdfghjklzxc1234567890qwertyuiopasdfghjklzxc1234567890qwertyuiopasdfghjklzxc1234567890qwertyuiopasdfghjklzxc1234567890qwertyuiopasdfghjklzxc1234567890qwertyuiopasdfghjklzxc1234567890qwertyuiopasdfghjklzxc",
-            // len10: "1234567890qwertyuiopasdfghjklzxc1234567890qwertyuiopasdfghjklzxc1234567890qwertyuiopasdfghjklzxc1234567890qwertyuiopasdfghjklzxc1234567890qwertyuiopasdfghjklzxc1234567890qwertyuiopasdfghjklzxc1234567890qwertyuiopasdfghjklzxc1234567890qwertyuiopasdfghjklzxc1234567890qwertyuiopasdfghjklzxc1234567890qwertyuiopasdfghjklzxc",
-            // len11: "1234567890qwertyuiopasdfghjklzxc1234567890qwertyuiopasdfghjklzxc1234567890qwertyuiopasdfghjklzxc1234567890qwertyuiopasdfghjklzxc1234567890qwertyuiopasdfghjklzxc1234567890qwertyuiopasdfghjklzxc1234567890qwertyuiopasdfghjklzxc1234567890qwertyuiopasdfghjklzxc1234567890qwertyuiopasdfghjklzxc1234567890qwertyuiopasdfghjklzxc",
-            // len12: "1234567890qwertyuiopasdfghjklzxc1234567890qwertyuiopasdfghjklzxc1234567890qwertyuiopasdfghjklzxc1234567890qwertyuiopasdfghjklzxc1234567890qwertyuiopasdfghjklzxc1234567890qwertyuiopasdfghjklzxc1234567890qwertyuiopasdfghjklzxc1234567890qwertyuiopasdfghjklzxc1234567890qwertyuiopasdfghjklzxc1234567890qwertyuiopasdfghjklzxc",
-            // json: {"bar": "bar", data: {}}
-          // },
 
           method: "post",
 
           success: function(resp) {
-            console.log('server responded with: ', resp);
+            // console.log('server responded with: ', resp);
           },
 
           error: function() {
-            console.log('error =(');
+            // console.log('error =(');
           }
         })
 
@@ -114,4 +86,3 @@
   }(debuggify.win, debuggify.doc, debuggify.extend, debuggify.globals, transports));
 
 }(debuggify));
-
