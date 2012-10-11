@@ -291,7 +291,7 @@
         var options = self.options;
 
         // Adding some common parameters
-        data[2].location = d.location.href;
+        // data[2].location = d.location.href;
 
         if(options.collector) {
           self.collectorQueue.push(data);
