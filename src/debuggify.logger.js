@@ -322,9 +322,9 @@
 
           return {
             file: m[1],
-            fileName: m[1].substr(m[1].lastIndexOf("/") + 1),
-            lineNo: m[2],
-            charNo: m[3]
+            filename: m[1].substr(m[1].lastIndexOf("/") + 1),
+            line: m[2],
+            char: m[3]
           };
         }
       } catch (e) {
@@ -732,14 +732,14 @@
 
       var fe = w.onerror;
 
-      w.onerror = function(message, file, lineNo, e){
+      w.onerror = function(message, file, line, e){
 
         var info = {
           type: 'error',
-          lineNo: lineNo,
+          line: line,
           file: file,
-          fileName: file.substr(file.lastIndexOf("/") + 1) || '',
-          charNo: null,
+          filename: file.substr(file.lastIndexOf("/") + 1) || '',
+          char: null,
           name: selfLogger.name,
           namespace: globals.selfLogger.namespace,
           stack: null
