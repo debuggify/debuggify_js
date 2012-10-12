@@ -1,4 +1,5 @@
-var __dfy = __dfy || {};
+
+window.__dfy = window.__dfy || {};
 
 (function(d) {
 
