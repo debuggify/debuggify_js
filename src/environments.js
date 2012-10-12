@@ -161,7 +161,7 @@ var __dfy = __dfy || {};
       level: 0,
       timestamp: true,
       domain: 'debuggify.net',
-      port: '9001',
+      port: '80',
     },
 
 //>>includeEnd("httpInclude");
