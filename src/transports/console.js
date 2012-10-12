@@ -51,7 +51,7 @@
     Console.prototype.send = function () {
 
       // var rawMessage = arguments[0];
-      var type = arguments[1].type;
+      var mtype = arguments[1].mtype;
       var message = this.format.apply(this, arguments);
 
       // TODO: Add checks for opera and other browsers
@@ -65,21 +65,21 @@
           return;
         }
 
-        if(!con[type]){
+        if(!con[mtype]){
           // Fallback to console.log
-          type = 'log';
+          mtype = 'log';
         }
 
         // Console.log.apply doesn't handle multiple arguments in Safari 3 or Chrome 1
         // http://paulirish.com/2009/log-a-lightweight-wrapper-for-consolelog/
 
-        if(con[type]['apply']) {
+        if(con[mtype]['apply']) {
 
-          con[type]['apply']( con, message);
+          con[mtype]['apply']( con, message);
 
         } else {
 
-          con[type]['call']( con, Array.prototype.slice.call( message) );
+          con[mtype]['call']( con, Array.prototype.slice.call( message) );
 
         }
 

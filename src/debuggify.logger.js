@@ -143,14 +143,14 @@
       /**
        * Set the flags
        *
-       * @param {'string'} type  type of messageType
+       * @param {'string'} mtype  type of message
        * @param {Boolean} value value of flag
        * @return {Boolean} true if success else false
        */
-      setFlag: function (type, value) {
+      setFlag: function (mtype, value) {
 
-        if(flags_[this.namespace] && typeof flags_[this.namespace][this.options.flagPrefix + type] !== 'undefined') {
-          flags_[this.namespace][this.options.flagPrefix + type] = value;
+        if(flags_[this.namespace] && typeof flags_[this.namespace][this.options.flagPrefix + mtype] !== 'undefined') {
+          flags_[this.namespace][this.options.flagPrefix + mtype] = value;
           return true;
         }
         return false;
@@ -250,11 +250,11 @@
        *
        * @param  {Object} message    message to send ex: 'dummy message'
        * @param  {string} moduleName Name of module ex: 'foo', 'bar'
-       * @param  {string} type       type of message ex: 'log', 'error', 'warn' etc
+       * @param  {string} mtype       type of message ex: 'log', 'error', 'warn' etc
        * @return {undefined}
        */
-      message: function(message, moduleName, type) {
-        this.get(moduleName).genericMessage([message], type);
+      message: function(message, moduleName, mtype) {
+        this.get(moduleName).genericMessage([message], mtype);
       },
 
       /**
@@ -336,10 +336,10 @@
      * Generate message on the basis of certain parameter
      *
      * @param  {Array} messageArray Array of data to be send in the message
-     * @param  {string} type         type of message
+     * @param  {string} mtype         type of message
      * @return {[type]}              composed message  from various details
      */
-    function genericMessage(messageArray, type) {
+    function genericMessage(messageArray, mtype) {
 
       var self = this;
       // Get the stack
@@ -370,24 +370,24 @@
       // Extract the line no and file name
       var info = getFileInfo(appStack[0]) || {};
 
-      info.type = type;
+      info.mtype = mtype;
       info.name = self.name;
       info.namespace = self.namespace;
       info.stack = appStack;
       info.timestamp = new Date();
 
       // Format [<function Name> <argument1> <argument2> ... <argumentn>]
-      self.sendToCollector([type, messageArray, info]);
+      self.sendToCollector([mtype, messageArray, info]);
     }
 
     /**
      * Generate dynamic function based on the options
      *
-     * @param  {string} type    type of function
+     * @param  {string} mtype    type of function
      * @param  {Object} options other details required to generate the function
      * @return {function}         return the generated function
      */
-    function getFunc(type, options) {
+    function getFunc(mtype, options) {
 
       // If optimized function is required
       if(options.optimize){
@@ -402,11 +402,11 @@
           var options = this.options;
 
           // if typeflag exist and its set then do the logging
-          if (typeof flags_[namespace][options.flagPrefix + type] !== 'undefined' &&
-            flags_[namespace][options.flagPrefix + type] &&
-            flags_[namespace][options.flagPrefix + type] !== 'false') {
+          if (typeof flags_[namespace][options.flagPrefix + mtype] !== 'undefined' &&
+            flags_[namespace][options.flagPrefix + mtype] &&
+            flags_[namespace][options.flagPrefix + mtype] !== 'false') {
 
-            this.genericMessage(arguments, type);
+            this.genericMessage(arguments, mtype);
 
           }
 
@@ -735,7 +735,7 @@
       w.onerror = function(message, file, line, e){
 
         var info = {
-          type: 'error',
+          mtype: 'error',
           line: line,
           file: file,
           filename: file.substr(file.lastIndexOf("/") + 1) || '',
